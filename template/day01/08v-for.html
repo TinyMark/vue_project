@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+             <li v-for="v in list" >{{ v }}</li>
+        </ul>
+        <ul>
+            <!-- vue官方建议我们在使用for的时候，尽量加上v-bind:key这么一个指令，给元素定义个唯一key，有助于vue渲染时的优化  -->
+             <li v-for="(v, i) in list" v-bind:key="i">{{ v }}{{ i }}</li>
+        </ul>
+        <ul>
+             <li v-for="v in f4">{{ v }}</li>
+        </ul>
+        <ul>
+             <li v-for="(v, k) in f4">{{ v }}{{ k }}</li>
+        </ul>
+        <!-- 注意：遍历指定次数的时候，n是从1开始的  -->
+        <p v-for="n in 5">{{ n }}{{ msg }}</p>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [ '貂蝉', '西施', '杨娘娘', '杭州美女' ],
+                f4: {
+                    f1: '旭哥',
+                    f2: '周哥',
+                    f3: '刘哥',
+                    f4: '健哥'
+                },
+                msg: "你到底爱不我?"
+            }
+        });
+    </script>
+</body>
+</html>

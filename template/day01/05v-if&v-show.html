@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-if原理是插入与删除节点  -->
+        <p v-if="isShow">{{ msg }}</p>
+        <!-- v-show原理是显示隐藏节点   -->
+        <p v-show="isShow">{{ msg }}</p>
+        <button v-on:click="changeShow">点我</button>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                title: '惊讶',
+                msg: '人类分几种？不清楚...',
+                isShow: true
+            },
+            methods: {
+                // 在方法中访问data里面定义的数据，可以通过this.属性名获取
+                // 其实方法中的this是vm实例，在vue初始化的时候会把data里面定义的数据添加到vm实例身上，
+                // 所以这里才可以直接this.属性名来访问。
+                alert: function() {
+                    alert(this.title);
+                },
+
+                changeShow: function() {
+                    this.isShow = !this.isShow;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

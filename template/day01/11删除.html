@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.wrapper {
+			width: 800px;
+			margin: 20px auto;
+		}
+		.operation {
+			margin-bottom: 10px;
+			text-align: center;
+			line-height: 20px;
+			font-size: 18px;
+		}
+		.operation input {
+			padding: 5px;
+			border: 1px solid deepskyblue;
+		}
+		.operation button {
+			border-radius: 3px;
+			background-color: deepskyblue;
+		}
+		.search {
+			text-align: left;
+			line-height: 20px;
+			font-size: 18px;
+		}
+		.search input {
+			padding: 5px;
+			border: 1px solid deeppink;
+		}
+		#tb{
+			width: 800px;
+			border-collapse: collapse;
+			margin: 20px auto;
+		}
+		#tb th{
+			background-color: #0094ff;
+			color:white;
+			font-size: 16px;
+			padding: 5px;
+			text-align: center;
+			border: 1px solid black;
+		}
+		#tb td{
+			padding: 5px;
+			text-align: center;
+			border: 1px solid black;
+		}
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="operation">
+			<input v-model="goodsName" class="add-name" type="text" placeholder="请输入名称">
+			<input v-model="goodsPrice" class="price-name" type="text" placeholder="请输入价格">
+			<button @click="add" class="add-btn" type="button">添加数据</button>
+		</div>
+		<div class="search">
+			<input type="text" placeHolder="请输入筛选内容">
+		</div>
+		<table id="tb">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>名称</th>
+					<th>价格</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody v-cloak>
+				<tr v-for="(v, i) in goodsList">
+					<td>{{ i + 1 }}</td>
+					<td>{{ v.name }} | filetname</td>
+					<td>{{ v.price }}</td>
+					<td>
+						<a @click="del(i)" href="#">删除</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<script>
+
+		// 1、先创建vue实例
+		var vm = new Vue({
+			el: '.wrapper',
+			data: {
+				goodsList: [
+					{ name: '帽子', price: 88 },
+					{ name: '裤子', price: 188 },
+				],
+				goodsName: '',
+				goodsPrice: ''
+			},
+			methods: {
+
+				// 添加商品
+				add: function() {
+					this.goodsList.push({
+						name: this.goodsName,
+						price: this.goodsPrice
+					});
+				},
+
+				// 删除商品
+				del: function(i) {
+					this.goodsList.splice(i, 1);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

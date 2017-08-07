@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <vue-p></vue-p>
+        <vue-p></vue-p>
+    </div>
+    <!-- 注意：模版当中必须使用一个根元素包裹子元素   -->
+    <template id="vue-p-tpl">
+        <div>
+            <p>{{ num }}</p>
+            <button @click="plus">++</button>
+        </div>
+    </template>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义组件
+        var component = Vue.extend({
+            template: "#vue-p-tpl",
+            // 组件中data定义为函数返回对象的形式就是为了防止多个组件直接的data混乱在一起
+            data: function() {
+                return {
+                    num: 1
+                };
+            },
+            methods: {
+                // 调用就把num自增
+                plus: function() {
+                    this.num++;
+                }
+            }
+        });
+
+        // 注册全局组件，任何vue实例的视图都可以使用
+        Vue.component('vue-p', component);
+
+        // 下面创建vm时，data可以单独拿出去定义
+        var data = {};
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            methods: {},
+            // 定义局部组件，只能在该实例所管理的视图中使用
+            components: {
+                'vue-pp': component
+            }
+        });
+    </script>
+</body>
+</html>

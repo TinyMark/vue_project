@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            width: 800px;
+            margin: 20px auto;
+        }
+
+        .operation {
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 18px;
+        }
+
+        .operation input {
+            padding: 5px;
+            border: 1px solid deepskyblue;
+        }
+
+        .operation button {
+            border-radius: 3px;
+            background-color: deepskyblue;
+        }
+
+        .search {
+            text-align: left;
+            line-height: 20px;
+            font-size: 18px;
+        }
+
+        .search input {
+            padding: 5px;
+            border: 1px solid deeppink;
+        }
+
+        #tb {
+            width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        #tb th {
+            background-color: #0094ff;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        #tb td {
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="operation">
+            <input class="add-name" type="text" placeholder="请输入名称">
+            <input class="price-name" type="text" placeholder="请输入价格">
+            <button class="add-btn" type="button">添加数据</button>
+        </div>
+        <div class="search">
+            <input type="text" placeHolder="请输入筛选内容">
+        </div>
+        <table id="tb">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th class="sort-title" data-keycode="name" data-order="1">名称</th>
+                    <th class="sort-title" data-keycode="price" data-order="1">价格</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <hbody>
+                <tr>
+                    <td colspan="4">列表无数据</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>宝马</td>
+                    <td>200</td>
+                    <td>
+                        <a href="#">删除</a>
+                    </td>
+                </tr>
+            </hbody>
+        </table>
+    </div>
+    <script src="/js/jquery-3.1.0.js"></script>
+    <script>
+        // 编写一个渲染方法，给定一个商品列表，渲染到页面指定位置
+        function render(goodsList) {
+            var htmlArr = goodsList.map((goods, i) => {
+                return `<tr>
+							<td>${ i}</td>
+							<td>${ goods.name}</td>
+							<td>${ goods.price}</td>
+							<td>
+								<a href="#" data-id="${ goods._id}">删除</a>
+							</td>
+						</tr>`;
+            });
+            $('tbody').html(htmlArr.join(''));
+        }
+
+        // 页面一打开，先请求接口获取全部数据进行渲染
+        $.ajax({
+            url: '/api/goods/list',
+            type: 'get',
+            success(data) {
+                render(data);
+            }
+        });
+
+        // 添加商品
+        $('.add-btn').on('click', () => {
+
+            // 添加商品要把新商品的名称传给后端
+            $.ajax({
+                url: '/api/goods/add',
+                type: 'post',
+                data: {
+                    name: $('.add-name').val(),
+                    price: $('.price-name').val()
+                },
+                success(data) {
+                    render(data);
+                }
+            });
+
+        });
+
+        // 搜索商品
+        $('.search input').on('change', function () {
+
+            // 获取表单搜索的值，然后以这个值作为条件搜索商品
+            $.ajax({
+                url: '/api/goods/search',
+                type: 'get',
+                data: {
+                    keycode: $(this).val()
+                },
+                success(data) {
+                    render(data);
+                }
+            });
+        });
+
+        // 删除商品 => 注意这里的删除按钮是动态生成的，必须要使用委托
+        $(document).on('click', 'tbody a', function () {
+
+            // 删除只需把要删的商品id传给后端即可
+            $.ajax({
+                url: '/api/goods/delete',
+                type: 'get',
+                data: {
+                    id: $(this).attr('data-id')
+                },
+                success(data) {
+                    render(data);
+                }
+            });
+        });
+
+        // 排序处理
+        $('.sort-title').on('click', function () {
+            let keycode = $(this).attr('data-keycode'),
+                order = $(this).attr('data-order');
+            // 再点击排序时，正1变反-1，反-1变成1
+            $(this).attr('data-order', -order);
+
+            $.ajax({
+                url: '/api/goods/sortlist',
+                type: 'get',
+                data: {
+                    keycode: keycode,
+                    order: order
+                },
+                success(data) {
+                    render(data);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

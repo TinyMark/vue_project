@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-on在绑定事件的时候，可能需要一些特殊配置或处理，可以通过修饰符来完成，修饰符使用.关键字的语法   -->
+        <!-- .top作用是阻止事件冒泡   -->
+        <div v-on:click="clickBody">
+            <i v-on:click.stop="clickI">什么</i>
+        </div>
+        
+        <form v-on:submit.prevent="submit">
+            <input type="text" name="" value="">
+            <button type="submit">提交</button>
+        </form>
+
+        <div>
+            <input v-on:keydown.enter="keydown" type="text">
+            <input v-on:keydown.65="keydown" type="text">
+        </div>
+
+        <p @click="click">快捷方式绑定事件</p>
+        <p :data-param="a">快捷方式绑定属性</p>
+    </div>
+    
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                a: '闭嘴吧'
+            },
+            methods: {
+                clickI: function() {
+                    alert('i' + this.a);
+                },
+                clickBody: function() {
+                    alert('body' + this.a);
+                },
+                submit: function() {
+                    alert('表单提交了');
+                },
+                keydown: function() {
+                    alert('键盘按下');
+                },
+                click: function() {
+                    alert('快捷绑定');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

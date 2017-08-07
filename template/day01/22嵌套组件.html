@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <vue-list></vue-list>
+    </div>
+    <template id="vue-list-tpl">
+        <ul>
+            <li v-for="v in list">
+                <vue-p></vue-p>
+                <vue-a></vue-a>
+            </li>
+        </ul>
+    </template>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('vue-list', {
+            template: '#vue-list-tpl',
+            data: function() {
+                return {
+                    list: [ 11, 22, 33, 44 ]
+                };
+            },
+            components: {
+                'vue-p': Vue.extend({
+                    template: '<p>1234</p>'
+                }),
+                'vue-a': Vue.extend({
+                    template: '<a>56677</a>'
+                })
+            }
+        });
+
+        var data = {};
+        var vm = new Vue({
+            el: '#app',
+            data: data
+        });
+    </script>
+</body>
+</html>

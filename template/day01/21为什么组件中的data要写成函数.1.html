@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <vue-list></vue-list>
+        <vue-list></vue-list>
+    </div>
+    <template id="vue-list-tpl">
+        <ul>
+            <li v-for="v in f5">{{ v }}</li>
+        </ul>
+    </template>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 组件一步到位
+        Vue.component('vue-list', {
+            template: "#vue-list-tpl",
+            data: function() {
+                return {
+                    f5: [ '象棋', '五子棋', '跳棋', '围棋', '军旗' ]
+                }
+            }
+        });
+
+        // 下面创建vm时，data可以单独拿出去定义
+        var data = {};
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            methods: {}
+        });
+    </script>
+</body>
+</html>

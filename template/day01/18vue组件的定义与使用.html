@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <vue-p></vue-p>
+        <vue-p></vue-p>
+        <vue-pp></vue-pp>
+        <vue-pp></vue-pp>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义组件
+        var component = Vue.extend({
+            template: "<p>{{ val }}</p>",
+            data: function() {
+                return {
+                    val: '组件测试'
+                };
+            }
+        });
+
+        // 注册全局组件，任何vue实例的视图都可以使用
+        Vue.component('vue-p', component);
+
+        // 下面创建vm时，data可以单独拿出去定义
+        var data = {};
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            methods: {},
+            // 定义局部组件，只能在该实例所管理的视图中使用
+            components: {
+                'vue-pp': component
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .wrapper {
+            width: 800px;
+            margin: 20px auto;
+        }
+
+        .operation {
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 18px;
+        }
+
+        .operation input {
+            padding: 5px;
+            border: 1px solid deepskyblue;
+        }
+
+        .operation button {
+            border-radius: 3px;
+            background-color: deepskyblue;
+        }
+
+        .search {
+            text-align: left;
+            line-height: 20px;
+            font-size: 18px;
+        }
+
+        .search input {
+            padding: 5px;
+            border: 1px solid deeppink;
+        }
+
+        #tb {
+            width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        #tb th {
+            background-color: #0094ff;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        #tb td {
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="operation">
+            <input class="add-name" type="text" placeholder="请输入名称" v-model='name'>
+            <input class="add-price" type="text" placeholder="请输入价格" v-model='price' @keydown.enter='add'>
+            <button class="add-btn" type="button" @click='add'>添加数据</button>
+        </div>
+        <div class="search">
+            <input v-model='searchVal' type="text" placeholder="请输入筛选内容">
+        </div>
+        <table id="tb">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>价格</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody v-for='(v,i) in goodsList' v-if='search(v.name)' v-cloak>
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.price | formatPrice(v.price) }}</td>
+                    <td>
+                        <a href="#" @click='del(i)'>删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '.wrapper',
+            data: {
+                goodsList: [
+                    { name: '帽子', price: '28' },
+                    { name: '眼镜', price: '48' },
+                    { name: '鞋子', price: '38' }
+                ],
+                name: '',
+                price: '',
+                searchVal: ''
+            },
+            methods: {
+                add: function () {
+                    var obj = {
+                        name: this.name,
+                        price: this.price
+                    }
+                    this.goodsList.push(obj);
+                    this.name = '';
+                    this.price = '';
+                },
+                del: function (i) {
+                    this.goodsList.splice(i, 1)
+                },
+                search: function (name) {
+                    return new RegExp(this.searchVal).test(name);
+                }
+            },
+            filters: {
+                formatPrice: function (val) {
+                    return '￥' + val;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
