@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <vue-msg msg='msg' data-index='1'></vue-msg>
+    </div>
+
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '123'
+            },
+            components: {
+                'vue-msg': {
+                    template: '<p>{{ msg }} {{ dataIndex }}</p>',
+                    props: ['msg', 'dataIndex']
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

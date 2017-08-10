@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <vue-nav :content='content'></vue-nav>
+        <vue-msg :msg='msg'></vue-msg>
+
+    </div>
+
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <script>
+        var data = {
+            content: '123',
+            msg: '456'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            components: {
+                'vue-nav': {
+                    template: '<p>{{ content }}</p>',
+                    props: ['content']
+                },
+                'vue-msg': {
+                    template: '<p>{{ msg }}</p>',
+                    props: ['msg']
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

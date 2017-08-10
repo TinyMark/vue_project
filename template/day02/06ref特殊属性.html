@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <div id="app">
+        <!-- 使用ref属性之后，vm实例就会在$refs对象中引用对象的元素或者组件对象   -->
+        <vue-nav ref="nav" v-on:sonclick="fn"></vue-nav>
+        <p ref="p">{{ content }}</p>
+    </div>
+    <script>
+        var data = {  
+            content: '可耻 耻辱 老家居然有苏宁！'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            methods: {
+                fn: function() {
+                    console.log(arguments);
+                }
+            },
+            components: {
+                'vue-nav': {
+                    template: '<div><button @click="send">按钮</button></div>',
+                    data: function() {
+                        return {
+                            val: '来自子的数据'
+                        };
+                    },
+                    methods: {
+
+                        // 对外发送一个sonClick事件
+                        send: function() {
+
+                            // 子传父：1、发送事件
+                            this.$emit('sonclick', this.val, 'xxxppp');
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

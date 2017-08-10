@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <vue-msg @sonclick='fn'></vue-msg>
+    </div>
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <script>
+        var data = {
+            content: '123'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            methods: {
+                fn: function () {
+                    console.log(arguments)
+                }
+            },
+            components: {
+                'vue-msg': {
+                    template: "<div><button @click='send'>click me</button></div>",
+                    data: function () {
+                        return {
+                            val: '来自子组件的数据'
+                        }
+                    },
+                    methods: {
+                        send: function () {
+                            this.$emit('sonclick', this.val, 'xxxppp')
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

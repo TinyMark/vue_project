@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <div id="app">
+        <input type="text" v-model="user_name">
+        <input type="text" v-model="user_phone">
+        <p>{{ content }}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user_name: '',
+                user_phone: '',
+            },
+
+            // 这个选项是用来定义计算属性的，和data的却别是这里的属性在渲染要进行计算
+            // computed还有一个特点就是内部有一个缓存机制，如果依赖的数据没有发生变化，
+            // 在节点重新渲染时，值会从缓存当中取，所以对数据的复杂处理应该放置到这里。
+            computed: {
+                content: function() {
+                    return this.user_name + '_' + this.user_phone;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

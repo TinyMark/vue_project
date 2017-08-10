@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <vue-tab></vue-tab>
+        <vue-tab></vue-tab>
+
+        <vue-nav></vue-nav>
+        <vue-nav></vue-nav>
+    </div>
+
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <script>
+        // 全局使用
+        Vue.component('vue-tab', {
+            template: '<p>{{ content }}</p>',
+            data: function () {
+                return {
+                    content: 'Tab栏'
+                }
+            }
+        })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            // 局部使用
+            components: {
+                'vue-nav': {
+                    template: '<p>{{ content }}</p>',
+                    data: function () {
+                        return {
+                            content: 'Nav导航'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

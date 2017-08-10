@@ -1,0 +1,10 @@
+$size:30px;
+body {
+    font-size: $size;
+}
+
+.img {
+    width: 200px;
+    height: 200px;
+    background-image: url('../img/avater.jpg')
+}

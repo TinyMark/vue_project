@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <div id="app">
+        <!-- 数据父传子，1、通过自定义属性的方式把父的数据定义在子组件根元素上   -->
+        <vue-nav :content="content" data-index="1"></vue-nav>
+    </div>
+    <script>
+        var data = {  
+            content: '可耻 耻辱 老家居然有苏宁！'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            components: {
+                'vue-nav': {
+                    // 注意，一般我们自己添加的自定义属性都会以data-作为前缀，
+                    // 子组件引用后在时候的要转为驼峰式
+                    template: '<div><p>{{ content }}{{ dataIndex }}</p><button @click="changeContent">改变值</button></div>',
+                    // 数据父传子，2、在子组件中通过props定义要获取的属性
+                    props: ['content', 'data-index'],
+                    methods: {
+                        changeContent: function() {
+                            this.content = this.content + this.content;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

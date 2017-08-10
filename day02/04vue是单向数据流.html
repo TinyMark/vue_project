@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src='./node_modules/vue/dist/vue.js'></script>
+    <div id="app">
+        <vue-msg :data-msg='msg'></vue-msg>
+    </div>
+
+    <script>
+        var data = {
+            msg: '123'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: data,
+            components: {
+                'vue-msg': {
+                    template: '<div><p>{{ dataMsg }}</p><button @click="fn">click me</button></div>',
+                    props: ['dataMsg'],
+                    methods: {
+                        fn: function () {
+                            this.dataMsg += this.dataMsgt
+                        }
+                    }
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
