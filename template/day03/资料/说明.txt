@@ -1,0 +1,1 @@
+进入vue_project，运行cnpm install安装依赖包，安装完毕后执行npm run dev就可以启动项目

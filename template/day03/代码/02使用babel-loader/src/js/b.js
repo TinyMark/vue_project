@@ -1,0 +1,1 @@
+export default msg => window.alert(msg);

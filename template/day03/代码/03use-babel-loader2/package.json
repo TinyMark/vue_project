@@ -1,0 +1,16 @@
+{
+  "name": "03use-babel-loader2",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "image-webpack-loader": "^3.3.1",
+    "webpack": "^3.5.2"
+  }
+}

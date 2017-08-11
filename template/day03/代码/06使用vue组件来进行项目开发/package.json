@@ -1,0 +1,7 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "webpack-dev-server --inline --open --content-base build --port 8888"
+  }
+}

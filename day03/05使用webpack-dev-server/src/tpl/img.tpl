@@ -1,0 +1,1 @@
+<img class="img" src="../img/avater.jpg" alt="img">
