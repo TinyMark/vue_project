@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1/这是MVVM中的v  -->
+    <div id="app">
+        <input v-focus v-color:yellow type="text" name="" value="啥都没有">
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            inserted: function(el) {
+               el.focus();
+            }
+        });
+        Vue.directive('color', {
+            // 第一个参数是一个对象，对象.arg可以获取指令的参数
+            inserted: function(el, obj) {
+               el.style.color = obj.arg;
+            }
+        });
+
+        // 2/这是MVVM中vm
+        var vm = new Vue({
+            el: '#app'
+        });
+    </script>
+</body>
+</html>

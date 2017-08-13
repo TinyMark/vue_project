@@ -1,0 +1,1251 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:vue</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="vue-">Vue第一天</h1>
+<h2 id="-">今日内容介绍</h2>
+<ul>
+<li>Vue介绍</li>
+<li>MVVM模式介绍</li>
+<li>Vue开发流程</li>
+<li>Vue常用系统指令</li>
+<li>实现品牌管理案例</li>
+<li>Vue调试工具</li>
+</ul>
+<p>##今日内容学习目标</p>
+<ul>
+<li>了解Vue的版本和常用学习资源</li>
+<li>理解MVVM模式要解决的问题</li>
+<li>能够分清楚MMVM中的M，V，VM在Vue的编码结构中是对应哪些代码块的</li>
+<li>能够记住Vue的3个编码步骤</li>
+<li>知道使用v-的相关的指令，例如v-text,v-html,v-model,v-for,v-on等</li>
+<li>理解并记住Vue对象中的 el,data,methods三个属性的作用</li>
+<li>能够利用vue的知识实现品牌管理的增，删除，列表展示</li>
+<li>能够利用filterBy过滤器实现数据过滤</li>
+<li>知道利用Vue-DevTools调试工具监控Vue运行时数据</li>
+</ul>
+<p>###1.1.2 课程的特点和目的</p>
+<p>　　在公司的项目开发中常常为了开发效率和可扩展性考虑，为了方便在后期维护软件，降低维护成本，公司常常会选择业内已经成熟的框架来架构自己的产品，其中Vue作为一个国产的前端开发框架，拥有完整的中文文档和学习门槛低而被越来越多的公司清奈，因此作为前端开发人员要想能够更快的看懂公司框架更好的融入到公司业务中，也必须学习Vue。</p>
+<p>   这套Vue项目课程从设计上是以常见开发需求作为依托，学习完毕以后，使同学们能够感受到公司通常开发的功能是什么样的，该如何去和后台配合。整个课程在教学中是由浅入深，从0到1带领学生一步步的将项目功能做出来，主要特点有：</p>
+<ul>
+<li>首先会带领同学们学习Vue的基础知识</li>
+<li>其次带领大家从0到1搭建一个项目框架，使学生拥有项目的架构能力</li>
+<li>最后带领大家在自己搭建好的项目框架上实现一个个项目功能，对前面知识的一个综合运用，整个过程中让同学们感受一个完整的项目是如何产生的</li>
+</ul>
+<h2 id="1-2-">1.2 项目截图</h2>
+<ul>
+<li>首页</li>
+<li><p><img src="imgs/d1-1.png" alt="d1-1.png"></p>
+</li>
+<li><p>新闻资讯</p>
+</li>
+<li><p><img src="imgs/d1-2.png" alt="d1-2.png">
+<img src="imgs/d1-3.png" alt="d1-3.png"></p>
+</li>
+<li><p>图片分享</p>
+</li>
+<li><p><img src="imgs/d1-4.png" alt="d1-4.png">
+<img src="imgs/d1-5.png" alt="d1-5.png">
+<img src="imgs/d1-6.png" alt="d1-6.png"></p>
+</li>
+<li><p>商品购买</p>
+</li>
+<li><p><img src="imgs/d1-7.png" alt="d1-7.png">
+<img src="imgs/d1-8.png" alt="d1-8.png">
+<img src="imgs/d1-9.png" alt="d1-9.png"></p>
+</li>
+<li><p>购物车</p>
+</li>
+<li><img src="imgs/d1-10.png" alt="d1-10.png"></li>
+</ul>
+<h2 id="1-3-vue-">1.3 Vue前置知识</h2>
+<h3 id="1-3-1-vue-">1.3.1 Vue学习资源</h3>
+<ul>
+<li>Vue官网： <a href="https://cn.vuejs.org/">https://cn.vuejs.org/</a></li>
+<li>Vue GitHub：<a href="https://github.com/vuejs/vue">https://github.com/vuejs/vue</a></li>
+<li>Vue1.0 在线文档：<a href="http://v1-cn.vuejs.org/guide/">http://v1-cn.vuejs.org/guide/</a></li>
+<li>Vue2.0 在线文档：<a href="https://cn.vuejs.org/v2/guide/">https://cn.vuejs.org/v2/guide/</a></li>
+<li>Vue1下载地址：<a href="http://v1-cn.vuejs.org/js/vue.js">http://v1-cn.vuejs.org/js/vue.js</a></li>
+<li>Vue2下载地址：<a href="https://unpkg.com/vue@2.2.1/dist/vue.js">https://unpkg.com/vue@2.2.1/dist/vue.js</a></li>
+</ul>
+<h3 id="1-3-2-vue-">1.3.2 Vue使用现状</h3>
+<ul>
+<li>Vue项目：饿了么招聘：<a href="https://jobs-mobile.ele.me/#!/">https://jobs-mobile.ele.me/#!/</a></li>
+<li>Vue 1.0.26开发的移动版项目：<a href="https://www.uhouzz.com/">https://www.uhouzz.com/</a> </li>
+<li>Vue.js v1.0.28开发的移动版项目： <a href="http://m.jianguanoa.com/#!/index">http://m.jianguanoa.com/#!/index</a> （开启chrome调试工具中的移动版浏览）</li>
+<li>Vue.js v1.0.28开发的移动版项目： <a href="http://www.fangdd.com/group/shanghai?zhihu">http://www.fangdd.com/group/shanghai?zhihu</a></li>
+<li>Vue开发的PC版本项目：<a href="http://lushi.zhujunwu.cn/#!/builds">http://lushi.zhujunwu.cn/#!/builds</a></li>
+<li>知乎上的一个专帖:<a href="https://www.zhihu.com/question/38213423">国内有哪些公司在用Vue.js，有什么心得</a></li>
+</ul>
+<h2 id="1-4-">1.4 开始课程</h2>
+<h3 id="1-4-1-mvvm-">1.4.1 MVVM模式</h3>
+<ul>
+<li><p>MVVM拆分解释为：</p>
+<ul>
+<li>Model:负责数据存储</li>
+<li>View:负责页面展示</li>
+<li>View Model:负责业务逻辑处理（比如Ajax请求等），对数据进行加工后交给视图展示</li>
+</ul>
+</li>
+<li><p>MVVM要解决的问题是将业务逻辑代码与视图代码进行完全分离，使各自的职责更加清晰，后期代码维护更加简单</p>
+</li>
+<li><p>用图解的形式分析Ajax请求回来数据后直接操作Dom来达到视图的更新的缺点，以及使用MVVM模式是如何来解决这个缺点的</p>
+</li>
+</ul>
+<ul>
+<li>Vue中的 MVVM
+<img src="imgs/d1-11.png" alt="d1-11.png"></li>
+</ul>
+<h3 id="1-4-2-vue-vue-">1.4.2 Vue初体验（记住Vue的编写步骤）</h3>
+<p><img src="imgs/d1-12.png" alt="d1-12.png"></p>
+<h3 id="1-4-3-vue-">1.4.3 Vue常用系统指令</h3>
+<ul>
+<li>插值表达式{{}}：</li>
+<li><pre><code>      数据绑定最常见的形式就是使用 “Mustache” 语法（双大括号）的文本插值        
+      例如：&lt;span&gt;Message: {{ msg }}&lt;/span&gt;
+      Mustache 标签将会被替代为对应数据对象上 msg 属性（msg定义在data对象中）的值。
+      无论何时，绑定的数据对象上 msg 属性发生了改变，插值处的内容都会更新。
+
+      {{}}对JavaScript 表达式支持，例如：
+      {{ number + 1 }}
+      {{ ok ? &#39;YES&#39; : &#39;NO&#39; }}
+      {{ message.split(&#39;&#39;).reverse().join(&#39;&#39;) }}
+
+      但是有个限制就是，每个绑定都只能包含单个表达式，如下表达式无效：
+      &lt;!-- 这是语句，不是表达式 --&gt;
+      {{ var a = 1 }}
+      &lt;!-- 流控制也不会生效，请使用三元表达式 --&gt;
+      {{ if (ok) { return message } }}
+</code></pre></li>
+<li><p>v-text</p>
+</li>
+<li><pre><code>      v-text可以将一个变量的值渲染到指定的元素中,例如：
+      &lt;div v-text=&quot;msg&quot;&gt;&lt;/div&gt;
+      new Vue({
+          data:{
+              msg:&#39;hello ivan&#39;                                            
+             }
+      });
+
+      输出结果：
+      &lt;div&gt;hello ivan&lt;/div&gt;
+</code></pre></li>
+<li>v-html</li>
+<li><pre><code>   双大括号和v-text会将数据解释为纯文本，而非 HTML 。
+   为了输出真正的 HTML ，你需要使用 v-html 指令：
+   例如：&lt;div v-html=&quot;rawHtml&quot;&gt;&lt;/div&gt;
+       new Vue({
+           data:{
+               rawHtml:&#39;&lt;h1&gt;hello ivan&lt;/h1&gt;&#39;
+             }
+       })
+
+     被插入的内容都会被当做 HTML,但是对于没有HTML标签的数据绑定时作用同v-text和{{}}
+
+ 注意：使用v-html渲染数据可能会非常危险，因为它很容易导致 XSS（跨站脚本） 攻击，使用的时候请谨慎，能够使用{{}}或者v-text实现的不要使用v-html
+</code></pre></li>
+<li>v-cloak</li>
+<li><pre><code>  v-cloak指令保持在元素上直到关联实例结束编译后自动移除，v-cloak和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+  通常用来防止{{}}表达式闪烁问题
+  例如：
+  &lt;style&gt;
+   [v-cloak] { display: none } 
+  &lt;/style&gt;
+
+   &lt;!-- 在span上加上 v-cloak和css样式控制以后，浏览器在加载的时候会先把span隐藏起来，知道 Vue实例化完毕以后，才会将v-cloak从span上移除，那么css就会失去作用而将span中的内容呈现给用户 --&gt;
+  &lt;span v-cloak&gt;{{msg}}&lt;/span&gt;    
+
+   new Vue({
+            data:{
+                msg:&#39;hello ivan&#39;
+              }
+        })
+</code></pre></li>
+<li><p>v-model以及双向数据绑定</p>
+</li>
+<li><pre><code> 1、在表单控件或者组件上创建双向绑定
+ 2、v-model仅能在如下元素中使用：
+    input
+    select
+    textarea
+    components（Vue中的组件）
+
+ 3、举例：
+    &lt;input type=&quot;text&quot; v-model=&quot;uname&quot; /&gt;
+
+  new Vue({
+           data:{
+               uname:&#39;&#39; //这个属性值和input元素的值相互一一对应，二者任何一个的改变都会联动的改变对方
+             }
+       })
+
+ 4、修饰符（了解）：
+     .lazy - 取代 input 监听 change 事件
+     .number - 自动将输入的字符串转为数字
+     .trim - 自动将输入的内容首尾空格去掉
+</code></pre></li>
+<li><p>v-bind</p>
+</li>
+<li><pre><code> 1、作用：可以给html元素或者组件动态地绑定一个或多个特性，例如动态绑定style和class
+
+ 2、举例：
+     &lt;img v-bind:src=&quot;imageSrc&quot;&gt;   
+     &lt;div v-bind:class=&quot;{ red: isRed }&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:class=&quot;[classA, classB]&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:class=&quot;[classA, { classB: isB, classC: isC }]&quot;&gt;
+     &lt;div v-bind:style=&quot;{ fontSize: size + &#39;px&#39; }&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:style=&quot;[styleObjectA, styleObjectB]&quot;&gt;&lt;/div&gt;
+
+ 3、缩写形式
+     &lt;img :src=&quot;imageSrc&quot;&gt;
+     &lt;div :class=&quot;{ red: isRed }&quot;&gt;&lt;/div&gt;
+     &lt;div :class=&quot;[classA, classB]&quot;&gt;&lt;/div&gt;
+     &lt;div :class=&quot;[classA, { classB: isB, classC: isC }]&quot;&gt;
+     &lt;div :style=&quot;{ fontSize: size + &#39;px&#39; }&quot;&gt;&lt;/div&gt;
+     &lt;div :style=&quot;[styleObjectA, styleObjectB]&quot;&gt;&lt;/div&gt;
+</code></pre></li>
+<li><p>v-for</p>
+</li>
+<li><p>```</p>
+<p>   1、作用：通常是根据数组中的元素遍历指定模板内容生成内容
+   2、用法举例：</p>
+<pre><code>   &lt;div v-for=&quot;item in items&quot;&gt;
+       {{ item.text }}
+     &lt;/div&gt;
+     new Vuew({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}]                
+             }
+     });
+</code></pre><p>   3、可以为数组索引指定别名（或者用于对象的键）：</p>
+<pre><code>   Vue1.0写法:
+     &lt;div v-for=&quot;(index,item) in items&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(key,val) in user&quot;&gt;&lt;/div&gt;
+       new Vue({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}],
+             user:{uname:&#39;ivan&#39;,age:32}
+             }
+     });
+
+   Vue2.0写法:
+     &lt;div v-for=&quot;(item, index) in items&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(val, key) in user&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(val, key, index) in user&quot;&gt;&lt;/div&gt;            
+      new Vue({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}],
+             user:{uname:&#39;ivan&#39;,age:32}
+             }
+     });
+
+4、v-for 默认行为试着不改变整体(为了性能考虑的设计)，而是替换元素。迫使其重新排序的元素,在Vue2.0版本中需要提供一个 key 的特殊属性，在Vue1.0版本中需要提供一个 track-by=&quot;$index&quot;:
+
+Vue2.0写法：
+&lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+   {{ item.text }}
+ &lt;/div&gt;
+
+Vue1.0写法：
+&lt;div v-for=&quot;item in items&quot; track-by=&quot;$index&quot;&gt;
+   {{ item.text }}
+ &lt;/div&gt;
+</code></pre><p>   5、vue1.0与vue2.0对于v-for使用区别总结：</p>
+<pre><code>   1、vue1.0中有$index ，而vue2.0中将$index移除
+   2、vue1.0中 (index,item) in list  而 vue2.0 变成了 (item,index) in list的写法
+   3、vue1.0中使用 track-by来标记dom对象的唯一性，vue2.0中改成了 :key
+</code></pre></li>
+</ul>
+<pre><code>
+- v-if
+-
+</code></pre><pre><code>1、作用：根据表达式的值的真假条件来决定是否渲染元素，如果条件为false不渲染（达到隐藏元素的目的），为true则渲染。在切换时元素及它的数据绑定被销毁并重建
+
+2、示例：
+    &lt;!-- Handlebars 模板 --&gt;
+    {{#if isShow}}
+      &lt;h1&gt;Yes&lt;/h1&gt;
+    {{/if}}
+
+    通常我们使用写法居多：
+    &lt;h1 v-if=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+
+    也可以用 v-else 添加一个 “else” 块：
+    &lt;h1 v-if=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+    &lt;h1 v-else&gt;No&lt;/h1&gt;
+
+    注意：v-else 元素必须紧跟在 v-if 元素否则它不能被识别。
+
+     new Vue({
+            data:{
+               isShow:true
+                }
+        });
+</code></pre><pre><code>
+- v-show
+-
+</code></pre><pre><code>1、根据表达式的真假值，切换元素的 display CSS 属性，如果为false，则在元素上添加 display:none来隐藏元素，否则移除display:none实现显示元素
+
+
+2、示例：
+     &lt;h1 v-show=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+
+     new Vue({
+            data:{
+               isShow:true
+                }
+        });
+
+3、v-if和v-show的总结：
+     v-if和v-show 都能够实现对一个元素的隐藏和显示操作,但是v-if是将这个元素添加或者移除到dom中，而v-show
+     是在这个元素上添加 style=&quot;display:none&quot;和移除它来控制元素的显示和隐藏的
+</code></pre><pre><code>
+- v-on
+-
+</code></pre><pre><code>  1、作用：绑定事件监听，表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略，用在普通的html元素上时，只能监听 原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。
+
+  2、常用事件：
+      v-on:click
+      v-on:keydown
+      v-on:keyup
+      v-on:mousedown
+      v-on:mouseover
+      v-on:submit
+      ....
+
+  3、v-on提供了很多事件修饰符来辅助实现一些功能，例如阻止冒泡等
+    事件修饰符有如下：
+    .stop - 调用 event.stopPropagation()。
+    .prevent - 调用 event.preventDefault()。
+    .capture - 添加事件侦听器时使用 capture 模式。
+    .self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+    .{keyCode | keyAlias} - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+    .native - 监听组件根元素的原生事件。
+
+  4、示例：
+      &lt;!-- 方法处理器 --&gt;
+    &lt;button v-on:click=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 内联语句 --&gt;
+    &lt;button v-on:click=&quot;doThat(&#39;hello&#39;, $event)&quot;&gt;&lt;/button&gt;
+    &lt;!-- 缩写 --&gt;
+    &lt;button @click=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 停止冒泡 --&gt;
+    &lt;button @click.stop=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 阻止默认行为 --&gt;
+    &lt;button @click.prevent=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 阻止默认行为，没有表达式 --&gt;
+    &lt;form @submit.prevent&gt;&lt;/form&gt;
+    &lt;!--  串联修饰符 --&gt;
+    &lt;button @click.stop.prevent=&quot;doThis&quot;&gt;&lt;/button&gt;
+
+
+   5、v-on的缩写形式：可以使用@替代 v-on:
+    &lt;button @click=&quot;doThis&quot;&gt;&lt;/button&gt;
+</code></pre><pre><code>
+
+### 1.4.4 利用系统指令实现品牌管理案例
+- 目的
+</code></pre><pre><code>  通过案例熟悉Vue系统指令的用法和结构的写法练习，做到知识点的巩固和学会应用，并且在案例的扩展需求中，学习Vue新知识点，做到先有需求，再有知识点学习，最后到知识点的应用，让学员学习知识点的同时学会知识点的应用
+</code></pre><pre><code>
+- 实现品牌列表数据展示
+- 
+  + 效果
+
+    ![d1-13.png](imgs/d1-13.png &quot;&quot;)
+
+
+  + 代码
+
+    ![d1-14.png](imgs/d1-14.png &quot;&quot;)
+
+- 实现品牌数据添加
+- 
+ + 效果
+
+    ![d1-15.png](imgs/d1-15.png &quot;&quot;)
+
+
+ + 代码
+
+    ![d1-16-1.png](imgs/d1-16-1.png &quot;&quot;)
+    ![d1-16-2.png](imgs/d1-16-2.png &quot;&quot;)
+
+- 实现品牌数据删除
+ + 效果
+
+    ![d1-17.png](imgs/d1-17.png &quot;&quot;)
+
+ + 代码
+
+     ![d1-18.png](imgs/d1-18.png &quot;&quot;)
+     ![d1-19.png](imgs/d1-19.png &quot;&quot;)
+
+- 实现根据品牌名称过滤符合条件的数据
+ + 效果
+
+     ![d1-20.png](imgs/d1-20.png &quot;&quot;)
+
+ + 代码  
+
+     ![d1-21.png](imgs/d1-21.png &quot;&quot;)
+
+### 1.4.5 Vue在Chrome浏览器的调试工具Vue-Devtools
+- 作用
+
+    ```html
+       Vue-Devtools是Chrome浏览器的一个扩展，通过Vue-Devtools可以实现在Chrome浏览器的调试工具栏中查看到Vue开发页面的相关数据对象，方法，事件，状态信息，方便程序员监控和调试解决问题
+</code></pre><ul>
+<li><p>地址</p>
+<pre><code>      GitHub地址：https://github.com/vuejs/vue-devtools
+
+      Chrome插件地址：https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN
+</code></pre></li>
+<li><p>通过Chrome插件地址安装插件(注意：这种方式需要翻墙)</p>
+<ul>
+<li><p>1、在Chrome浏览器中打开地址：<a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN">https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN</a></p>
+</li>
+<li><p>2、点击里面的“+ 添加至CHROME” 按钮即可安装插件</p>
+<p> <img src="imgs/d1-22.png" alt="d1-22.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>3、安装以后，在Chome浏览器中打开使用Vue开发的站点后按F12打开调试工具即可看到Vue调试工具</p>
+<p><img src="imgs/d1-23.png" alt="d1-23.png"></p>
+</li>
+</ul>
+<ul>
+<li>通过Vue-DevTools源码安装（需要先安装node.exe）<ul>
+<li>1、<a href="https://nodejs.org/en/">https://nodejs.org/en/</a> 下载node.exe安装</li>
+<li>2、去<a href="https://github.com/vuejs/vue-devtools">https://github.com/vuejs/vue-devtools</a> 下载到文件</li>
+<li>3、进入vue-devtools-master工程 先执行npm install再执行npm run build</li>
+<li>4、进入vue-devtools-master\shells\chrome文件夹中修改mainifest.json 中的persistant为true</li>
+<li>5、打开谷歌浏览器设置---&gt;扩展程序--&gt;勾选开发者模式---&gt;加载已解压的扩展程序---&gt;选择“vue-devtools-master\shells下的chrome”文件夹，至此恭喜已经安装成功！</li>
+</ul>
+</li>
+</ul>
+<h1 id="vue-">Vue第二天</h1>
+<h2 id="-">今日内容介绍</h2>
+<ul>
+<li>v-on按键修饰符</li>
+<li>扩展品牌管理需求来学习新知识点</li>
+<li>Vue中的AJAX请求</li>
+<li>跨域复习和JSONP</li>
+<li>Vue的生命周期方法</li>
+<li>实现品牌管理案例的AJAX版</li>
+</ul>
+<p>##今日内容学习目标</p>
+<ul>
+<li>掌握v-on事件按键修饰符的作用</li>
+<li>记住自定义属性指令和元素指令的写法</li>
+<li>记住自定义过滤器的写法以及管道符|的使用</li>
+<li>能够分清楚私有过滤器和全局过滤器的应用场景</li>
+<li>掌握vue-resource中get方法的使用</li>
+<li>掌握vue-resource中jsonp方法的使用</li>
+<li>掌握vue-resource中post方法的使用</li>
+</ul>
+<h1 id="-">详细内容</h1>
+<h2 id="1-v-on-">1 v-on按键修饰符</h2>
+<h3 id="1-1-">1.1 作用说明</h3>
+<pre><code>    文档地址：http://cn.vuejs.org/v2/guide/events.html#按键修饰符
+
+    在监听键盘事件时，我们经常需要监测常见的键值。 Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+    .enter
+    .tab
+    .delete (捕获 “删除” 和 “退格” 键)
+    .esc
+    .space
+    .up
+    .down
+    .left
+    .right
+    1.0.8+ 支持单字母按键别名。
+</code></pre><p>###1.2 可以自定义按键别名</p>
+<pre><code>    在Vue2.0 中默认的按键修饰符是存储在 Vue.config.keyCodes中
+    // 例如在Vue2.0版本中扩展一个f1的按键修饰符写法：
+    Vue.config.keyCodes.f1 = 112
+
+
+    在1.0.17+ 中默认的按键修饰符是存储在Vue.directive(&#39;on&#39;).keyCodes中                                         
+
+    // 例如在Vue1.0中扩展一个f1的按键修饰符写法：
+    Vue.directive(&#39;on&#39;).keyCodes.f1 = 112
+</code></pre><h3 id="1-3-v-on-enter-">1.3 利用v-on的.enter按键修饰符实现品牌管理的新增按钮功能</h3>
+<ul>
+<li><p>效果图</p>
+<p>  <img src="imgs/d2-1.png" alt="d2-1.png"></p>
+</li>
+</ul>
+<ul>
+<li><p>实现代码</p>
+<p>  <img src="imgs/d2-2.png" alt="d2-2.png">
+  <img src="imgs/d2-3.png" alt="d2-3.png"></p>
+</li>
+</ul>
+<h2 id="2-">2 自定义指令</h2>
+<pre><code>    当Vue提供的系统指令不能满足需求时，就需要自己定义指令来进行扩展，例如，定义一个v-focus指令来实现文本框的自动获取焦点功能
+</code></pre><h3 id="2-1-">2.1 自定义属性指令</h3>
+<ul>
+<li>写法格式</li>
+</ul>
+<pre><code>    定义指令：
+    Vue.directive(&#39;指令ID，不需要增加v-前缀&#39;,function(){
+        //实现指令的业务
+        this.el //代表使用这个指令的元素对象
+    });
+
+    使用指令(当做一个元素的属性使用)：
+    &lt;input type=&quot;text&quot; v-指令ID /&gt;
+</code></pre><ul>
+<li>（属性指令应用举例）利用自定义属性指令实现自动获取焦点功能</li>
+</ul>
+<pre><code>    定义指令：
+    //定义一个 v-focus的属性自定义指令
+    Vue.directive(&#39;focus&#39;,function(){
+        this.el.focus(); //实现文本框的自动获取焦点
+    });
+
+    使用指令：
+    &lt;input type=&quot;text&quot; v-focus /&gt;
+</code></pre><h3 id="2-2-">2.2 自定义元素指令</h3>
+<ul>
+<li>写法格式</li>
+</ul>
+<pre><code>    定义指令：
+    Vue.elementDirective(&#39;指令id&#39;,{
+        bind:function(){
+          //实现指令的业务
+        this.el //代表使用这个指令的元素对象
+        }
+    });
+
+    使用指令：
+       &lt;指令id&gt;&lt;/指令id&gt;
+</code></pre><ul>
+<li>（元素指令应用举例）利用自定义属性指令实现日期格式化</li>
+</ul>
+<pre><code>    定义指令：
+       Vue.elementDirective(&#39;datefmt&#39;,{
+        bind:function(){
+            var v=this.el.attributes[0].value;    
+            var date = new Date(this.vm[v]); 
+            var year = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            //输出： yyyy-mm-dd
+            var fmtStr = year+&#39;-&#39;+m +&#39;-&#39;+d;
+
+            this.el.innerText = fmtStr;            
+        }
+    });
+
+    new Vue({
+        el:&#39;#app&#39;,
+        data:{
+            time:new Date()
+        }        
+    });
+
+    使用指令：
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;datefmt :dt=&quot;time&quot;&gt;&lt;/datefmt&gt;
+        &lt;/div&gt;
+</code></pre><h2 id="3-">3 过滤器</h2>
+<pre><code>    Vue提供了一系列的固定逻辑来使程序员更加容易的实现这些功能，这些过滤器称之为系统过滤器，Vue也提供了一个接口用来供程序员定义属于自己的特殊逻辑，Vue称之为自定义过滤器
+</code></pre><h3 id="3-1-">3.1 系统过滤器</h3>
+<ul>
+<li>关于系统过滤器的使用参考请参考文档：<a href="http://v1-cn.vuejs.org/api/#过滤器">http://v1-cn.vuejs.org/api/#过滤器</a></li>
+<li>注意：系统过滤器是Vue1.0中存在的，在Vue2.0中已经删除了</li>
+</ul>
+<h3 id="3-2-">3.2 自定义过滤器</h3>
+<ul>
+<li>文档地址：<a href="http://v1-cn.vuejs.org/guide/custom-filter.html">http://v1-cn.vuejs.org/guide/custom-filter.html</a></li>
+</ul>
+<h4 id="3-2-1-">3.2.1 自定义私有过滤器</h4>
+<ul>
+<li>定义方式</li>
+</ul>
+<pre><code>    可以在 new Vue({filters：{}})中的filters中注册一个私有过滤器
+
+    定义格式：
+    new Vue({
+    el:&#39;#app&#39;,    
+    filters:{        
+        &#39;过滤器名称&#39;:function(管道符号|左边参数的值,参数1,参数2,....) {
+          return 对管道符号|左边参数的值做处理以后的值
+        })    
+    }
+    });
+
+    Vue1.0 使用写法：
+    &lt;span&gt;{{ msg | 过滤器id &#39;参数1&#39; &#39;参数2&#39; .... }}&lt;/span&gt;
+
+    Vue2.0 使用写法：
+    &lt;span&gt;{{ msg | 过滤器id(&#39;参数1&#39; &#39;参数2&#39; ....) }}&lt;/span&gt;
+</code></pre><ul>
+<li>(应用示例)自定义全局过滤器实现日期格式化</li>
+</ul>
+<pre><code>   1、 定义全局的日期格式化过滤器：
+
+        new Vue({
+            el:&#39;#app&#39;,
+            data:{
+                time:new Date()
+            },
+            filters:{
+                //定义在 VM中的filters对象中的所有过滤器都是私有过滤器
+                datefmt:function(input,splicchar){
+                    var date = new Date(input); 
+                    var year = date.getFullYear();
+                    var m = date.getMonth() + 1;
+                    var d = date.getDate();            
+                    var fmtStr = year+splicchar+m +splicchar+d;
+                    return fmtStr; //返回输出结果
+                }
+            }
+        });
+
+   2、使用
+
+      &lt;div id=&quot;app&quot;&gt;
+        {{ time | datefmt &#39;-&#39; }}  //Vue1.0传参写法
+
+        {{ time | datefmt(&#39;-&#39;) }} //Vue2.0传参写法
+
+      &lt;/div&gt;
+</code></pre><h4 id="3-2-2-">3.2.2 自定义全局过滤器</h4>
+<ul>
+<li>定义方式</li>
+</ul>
+<pre><code>    可以用全局方法 Vue.filter() 注册一个全局自定义过滤器，它接收两个参数：过滤器 ID 和过滤器函数。过滤器函数以值为参数，返回转换后的值
+
+    定义格式：
+    Vue.filter(&#39;过滤器名称&#39;, function (管道符号|左边参数的值,其他参数1,其他参数2,....) {
+      return 对管道符号|左边参数的值做处理以后的值
+    })
+
+    Vue1.0 使用：
+    &lt;span&gt;{{ msg | 过滤器名称 &#39;参数1&#39; &#39;参数2&#39; .... }}&lt;/span&gt;
+
+    Vue2.0 使用：
+    &lt;span&gt;{{ msg | 过滤器名称(&#39;参数1&#39; &#39;参数2&#39; ....) }}&lt;/span&gt;
+</code></pre><ul>
+<li>(应用示例)自定义全局过滤器实现日期格式化</li>
+</ul>
+<pre><code>   1、 定义全局的日期格式化过滤器：
+
+        Vue.filter(&#39;datefmt&#39;,function(input,splicchar){
+            var date = new Date(input); 
+            var year = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();            
+            var fmtStr = year+splicchar+m +splicchar+d;
+            return fmtStr; //返回输出结果
+        });    
+
+   2、使用
+
+      &lt;div id=&quot;app&quot;&gt;
+        {{ time | datefmt &#39;-&#39; }}  //Vue1.0传参写法
+
+        {{ time | datefmt(&#39;-&#39;) }} //Vue2.0传参写法
+
+      &lt;/div&gt;
+    &lt;script&gt;  
+        new Vue({
+            el:&#39;#app1&#39;,
+            data:{
+                time:new Date()
+            }
+        });
+    &lt;/script&gt;
+</code></pre><h2 id="4-vue-ajax-">4 Vue中的AJAX请求</h2>
+<pre><code>    Vue可以借助于vue-resource来实现AJAX请求
+</code></pre><ul>
+<li>http请求报文</li>
+</ul>
+<pre><code>    浏览器与服务器数据交互是遵循http协议的，当浏览器要访问服务器的时候，浏览器需要将相关请求数据提交给服务器（例如：浏览器信息，url地址，参数等），通常是通过请求报文来提交的
+
+    请求报文的格式分为：
+        1、请求报文行
+        2、请求报文头
+        3、请求报文体
+</code></pre><ul>
+<li>http响应报文</li>
+</ul>
+<pre><code>    当浏览器请求服务器的时候，服务器需要将数据返回给浏览器，这种数据是通过响应报文响应回浏览器的
+
+     响应报文的格式分为：
+        1、响应报文行
+        2、响应报文头
+        3、响应报文体
+</code></pre><ul>
+<li>请求报文和响应报文配图</li>
+</ul>
+<p><img src="imgs/d2-4.png" alt="d2-4.png"></p>
+<h3 id="4-1-vue-resource">4.1 vue-resource</h3>
+<pre><code>   Vue与后台Api进行交互通常是利用vue-resource来实现的，本质上vue-resource是通过http来完成AJAX请求响应的
+</code></pre><ul>
+<li>vue-resource GitHub 地址：<a href="https://github.com/pagekit/vue-resource">https://github.com/pagekit/vue-resource</a></li>
+<li><p>vue-resource Http请求api参考（主要看这个）：<a href="https://github.com/pagekit/vue-resource/blob/master/docs/http.md">https://github.com/pagekit/vue-resource/blob/master/docs/http.md</a></p>
+</li>
+<li><p>vue结合vue-resource写法步骤</p>
+</li>
+</ul>
+<pre><code>    1、通过 https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js 下载到vue-resource文件
+
+    2、在html页面中通过script标签导入vue-resource.min.js 文件后，就会自动的在Vue对象实例上初始化 $http
+
+    3、使用
+    // 全局Vue对象写法
+        Vue.http.get(&#39;/someUrl&#39;, [options]).then(successCallback, errorCallback);
+        Vue.http.post(&#39;/someUrl&#39;, [body], [options]).then(successCallback, errorCallback);
+
+    // 在Vue对象中的写法
+        this.$http.get(&#39;/someUrl&#39;, [options]).then(successCallback, errorCallback);
+        this.$http.post(&#39;/someUrl&#39;, [body], [options]).then(successCallback, errorCallback);
+</code></pre><ul>
+<li>vue-resource get请求</li>
+</ul>
+<pre><code>    写法格式：
+     this.$http.get(&#39;请求的url&#39;, [可选参数对象，使用{}传参]).then(成功回调函数, 失败回调函数);
+
+    成功回调函数参数对象主要属性说明：
+    1、url ： 请求的原始url
+    2、body： 响应报文体中的数据（我们通常用这个属性获取服务器返回的数据）
+    3、其他属性请看文档
+
+    举例：
+     this.$http.get(&#39;http://vuecms.ittun.com/api/getlunbo?id=1&#39;).then(function(res){console.log(res.body)}, function(err){//err是异常数据});
+</code></pre><ul>
+<li>vue-resource post请求</li>
+</ul>
+<pre><code>    写法格式：
+     this.$http.post(&#39;请求的url&#39;,[可选参数请求报文体对象body,使用{}传参], [可选参数对象，使用{}传参]).then(成功回调函数, 失败回调函数);
+
+    成功回调函数参数对象主要属性说明：
+    1、url ： 请求的原始url
+    2、body： 响应报文体中的数据（我们通常用这个属性获取服务器返回的数据）
+    3、其他属性请看文档
+
+    注意点：
+    $http.post()方法中的第二个参数固定写成：{emulateJSON:true},否则可能造成服务器无法接收到请求报文体中的参数值
+
+    举例：
+     this.$http.post(&#39;http://vuecms.ittun.com/api/adddata?id=1&#39;  //请求的url
+     ,{content:&#39;hello&#39;}  //请求报文体中传入的参数对象，多个使用逗号分隔
+     ,{emulateJSON:true}  //固定写法，保证服务器可以获取到请求报文体参数值
+     ).then(function(res){console.log(res.body)}, function(err){//err是异常数据});
+</code></pre><ul>
+<li>vue-resource jsonp请求</li>
+</ul>
+<pre><code>    jsonp请求主要用来解决ajax跨域请求问题，使用jsonp实现跨域首先要保证服务器api支持jsonp请求的格式
+
+
+    写法格式：
+     this.$http.jsonp(&#39;请求的url&#39;, [可选参数对象，使用{}传参]).then(成功回调函数, 失败回调函数);
+
+    成功回调函数参数对象主要属性说明：
+    1、url ： 请求的原始url
+    2、body： 响应报文体中的数据（我们通常用这个属性获取服务器返回的数据）
+    3、其他属性请看文档
+
+    举例：
+     this.$http.jsonp(&#39;http://vuecms.ittun.com/api/getlunbo?id=1&#39;).then(function(res){console.log(res.body)}, function(err){//err是异常数据});
+</code></pre><h3 id="4-2-vue-resource-ajax-">4.2 利用vue-resource完成品牌管理案例的AJAX版本</h3>
+<p><img src="imgs/d2-5.png" alt="d2-5.png"></p>
+<h2 id="5-vue-">5 Vue的生命周期方法</h2>
+<p><img src="imgs/d2-6.png" alt="d2-6.png"></p>
+<h1 id="vue-">Vue第三天</h1>
+<h2 id="-">今日内容介绍</h2>
+<ul>
+<li>Vue1.0过渡动画的实现</li>
+<li>Vue2.0过渡动画的实现</li>
+<li>组件定义和注册的各种写法</li>
+<li>组件的动态切换</li>
+<li>组件的传值</li>
+</ul>
+<p>##今日内容学习目标</p>
+<ul>
+<li>知道vue动画效果的三个css的作用</li>
+<li>记住vue1.0和2.0利用css的三个类来控制过渡动画的写法</li>
+<li>记住vue1.0和2.0中利用animate.css来控制过渡动画写法</li>
+<li>记住vue1.0和2.0中过渡动画的钩子函数使用</li>
+<li>知道组件的定义和注册写法 Vue.component()</li>
+<li>知道利用components实现子组件的定义</li>
+<li>知道利用props实现父组件传值给子组件的写法</li>
+<li>知道利用component 控制组件的切换</li>
+<li>知道利用$emit和v-on来实现子组件传值给父组件</li>
+<li>知道v-el与v-ref的区别和使用</li>
+</ul>
+<h1 id="-">详细内容</h1>
+<h2 id="1-0-vue-">1.0 Vue过渡动画</h2>
+<pre><code>    通过 Vue.js 的过渡系统，可以在元素从 DOM 中插入或移除时自动应用过渡效果。Vue.js 会在适当的时机为你触发 CSS 过渡或动画
+    常用场景有：
+    1、条件渲染 （使用 v-if）
+    2、条件展示 （使用 v-show）
+    3、动态组件
+</code></pre><h3 id="1-0-1-transition-">1.0.1 transition的作用</h3>
+<pre><code>    1、在Vue1.0版本中为了应用过渡效果，需要在实现过渡动画的元素上使用 transition 特性，示例：
+     &lt;div v-if=&quot;show&quot; transition=&quot;my-transition&quot;&gt;&lt;/div&gt; ,my-transition 可以有程序员自定义名称
+
+
+    2、 在Vue2.0版本中改变成了由 transition特性的写法变成了 &lt;transition&gt;&lt;/transition&gt;的写法    
+     &lt;transition name=&quot;fade&quot;&gt;
+        &lt;p v-if=&quot;show&quot;&gt;hello&lt;/p&gt;
+      &lt;/transition&gt;
+
+
+     ***transition通常与下面指令结合在一起使用：
+       - v-if
+       - v-show
+</code></pre><h3 id="1-0-2-vue-">1.0.2 Vue中过渡动画的几种常用写法</h3>
+<ul>
+<li><p>利用css控制过渡动画</p>
+<ul>
+<li><p>Vue1.0写法
+  <img src="imgs/d3-1.png" alt="d3-1.png">        </p>
+</li>
+<li><p>Vue2.0写法
+   <img src="imgs/d3-2.png" alt="d3-2.png">   </p>
+</li>
+</ul>
+</li>
+<li><p>利用animate.css控制过渡动画</p>
+<ul>
+<li><p>Vue1.0写法
+   <img src="imgs/d3-3.png" alt="d3-3.png">  </p>
+</li>
+<li><p>Vue2.0写法</p>
+<pre><code>![d3-4.png](imgs/d3-4.png &quot;&quot;)  
+</code></pre></li>
+</ul>
+</li>
+<li><p>利用钩子函数控制过渡动画</p>
+<ul>
+<li>Vue1.0 过渡动画API文档：<a href="http://v1-cn.vuejs.org/guide/transitions.html">http://v1-cn.vuejs.org/guide/transitions.html</a></li>
+<li>Vue2.0 过渡动画API文档：<a href="http://cn.vuejs.org/v2/guide/transitions.html">http://cn.vuejs.org/v2/guide/transitions.html</a></li>
+</ul>
+</li>
+<li><p>Vue1.0钩子函数</p>
+<pre><code>    1、过渡动画进入
+        beforeEnter:function(el){}      过渡动画进入之前，一般在这个方法中定义目标元素的初始位置
+        enter:function(el,done){}       过渡动画进入中，在这个方法中定义目标元素的结束位置
+        afterEnter:function(el){}       过渡动画结束后，通常在这个方法里面重置初始值
+        enterCancelled:function(el){}   取消过渡动画时被调用
+
+    2、过渡动画离开
+        beforeLeave:function(el){}      动画离开之前触发    
+        leave:function(el){}            过渡动画进入中触发
+        afterLeave:function(el){}       过渡动画离开结束后
+        leaveCancelled:function(el){}   取消过渡动画时被调用
+</code></pre><pre><code>3、使用示例：
+   ![d3-5.png](imgs/d3-5.png &quot;&quot;)
+</code></pre></li>
+<li><p>Vue2.0钩子函数</p>
+</li>
+</ul>
+<pre><code>     1、过渡动画进入
+          before-enter      过渡动画进入之前，一般在这个方法中定义目标元素的初始位置
+          enter             过渡动画进入中，在这个方法中定义目标元素的结束位置
+          after-enter       过渡动画结束后，通常在这个方法里面重置初始值
+          enter-cancelled   取消过渡动画时被调用
+
+      2、过渡动画离开
+          before-leave      动画离开之前触发    
+          leave             过渡动画进入中触发
+          after-leave       过渡动画离开结束后
+          leave-cancelled   取消过渡动画时被调用
+</code></pre><p>   3、使用示例：
+   <img src="imgs/d3-6.png" alt="d3-6.png"></p>
+<h2 id="2-0-vue-">2.0 Vue组件</h2>
+<pre><code>    组件（Component）是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码
+</code></pre><h3 id="2-0-1-">2.0.1 组件的定义和注册</h3>
+<ul>
+<li><p>写法1：使用Vue.extend方法定义组件，使用 Vue.component方法注册组件</p>
+<p> <img src="imgs/d3-7.png" alt="d3-7.png"></p>
+</li>
+<li><p>写法2:使用 Vue.component方法定义注册组件一步到位</p>
+<p> <img src="imgs/d3-8.png" alt="d3-8.png"></p>
+</li>
+<li><p>写法3：将组件内容定义到template模板中</p>
+<p> <img src="imgs/d3-9.png" alt="d3-9.png"></p>
+</li>
+<li><p>写法4：将组件内容定义到类型为 x-template的script模板中</p>
+<p> <img src="imgs/d3-10.png" alt="d3-10.png">    </p>
+</li>
+</ul>
+<h3 id="2-0-2-">2.0.2 组件中实现指令以及事件绑定</h3>
+<p>   <img src="imgs/d3-11.png" alt="d3-11.png"></p>
+<h3 id="2-0-3-">2.0.3 组件中注册子组件</h3>
+<p>   <img src="imgs/d3-12.png" alt="d3-12.png"></p>
+<h3 id="2-0-4-component-is-">2.0.4 组件中利用component中的is来实现组件切换</h3>
+<p>   <img src="imgs/d3-13.png" alt="d3-13.png"></p>
+<h3 id="2-0-5-">2.0.5 实现父组件传值给子组件</h3>
+<p>   <img src="imgs/d3-14.png" alt="d3-14.png"></p>
+<h3 id="2-0-6-">2.0.6 实现子组件传值给父组件</h3>
+<p>   <img src="imgs/d3-15.png" alt="d3-15.png"></p>
+<h3 id="2-0-7-v-el-dom-">2.0.7 通过v-el获取到dom对象</h3>
+<p>   <img src="imgs/d3-16.png" alt="d3-16.png"></p>
+<h3 id="2-0-8-v-ref-">2.0.8 通过v-ref获取到整个组件的对象</h3>
+<p>   <img src="imgs/d3-17.png" alt="d3-17.png"></p>
+<h1 id="vue-">Vue第三天</h1>
+<h2 id="-">今日内容介绍</h2>
+<ul>
+<li>路由服务vue-router在Vue1.0的写法</li>
+<li>路由服务vue-router在Vue2.0的写法</li>
+<li>watch和计算属性的学习</li>
+<li>总结这几天学习中知识点在Vue1.0与2.0的区别</li>
+<li>WebPack学习以及相关-loader的使用</li>
+</ul>
+<p>##今日内容学习目标</p>
+<ul>
+<li>记住vue-router的Vue1.0和2.0版本的基本写法</li>
+<li>知道使用vue-router实现url传入参数，用$route.params接收参数</li>
+<li>知道嵌套路由的使用，vue1.0用subRoutes 2.0使用 children</li>
+<li>记住$watch和计算属性computed的使用</li>
+<li>记住webpack打包css，less,sass的相关-loader包</li>
+<li>记住webpack es6转es5的写法和注意点</li>
+<li>记住webpack完成 url()导入资源文件的打包</li>
+</ul>
+<h1 id="-">详细内容</h1>
+<h2 id="1-0-vue-router">1.0 路由vue-router</h2>
+<pre><code>    在一个系统中会由很多页面组成，在Vue开发中这些页面通常使用的是Vue中的组件来实现的，那么当在一个页面要跳转到另外一个页面的时候
+    是通过改变url路径来实现的，那么这个时候Vue需要知道当前url对应的是哪个组件页面，这个控制着就是vue-router
+    接下来，学习vue-router的相关写法,
+    注意的是：vue-router 在vue2.0版本中做了很大的改动，所以要注意Vue的版本来选择预期对应的vue-router版本
+</code></pre><h3 id="1-0-1-vue-router-">1.0.1 vue-router资源和介绍</h3>
+<ul>
+<li>配合Vue1.0使用的版本的帮助文档地址：<a href="https://github.com/vuejs/vue-router/tree/1.0/docs/zh-cn">https://github.com/vuejs/vue-router/tree/1.0/docs/zh-cn</a></li>
+<li>配合Vue1.0使用的vue-router下载地址：<a href="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js">https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js</a></li>
+<li>配合Vue2.0使用的版本的帮助文档地址：<a href="http://router.vuejs.org/zh-cn/installation.html">http://router.vuejs.org/zh-cn/installation.html</a></li>
+<li>配合Vue2.0使用的vue-router下载地址：<a href="https://unpkg.com/vue-router/dist/vue-router.js">https://unpkg.com/vue-router/dist/vue-router.js</a></li>
+</ul>
+<h3 id="1-0-2-vue-router-vue1-0-">1.0.2 vue-router在 vue1.0中的使用</h3>
+<ul>
+<li>1、请下载匹配Vue1.0版本的vue-router文件</li>
+<li>2、vue-router使用示例代码
+<img src="imgs/d4-1.png" alt="d4-1.png"></li>
+</ul>
+<h3 id="1-0-3-vue-router-vue2-0-">1.0.3 vue-router在 vue2.0中的使用</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router使用示例代码
+<img src="imgs/d4-2.png" alt="d4-2.png"></li>
+</ul>
+<h3 id="1-0-4-vue1-0-url-">1.0.4 vue1.0的路由参数定义实现url的传值</h3>
+<ul>
+<li>1、请下载匹配Vue1.0版本的vue-router文件</li>
+<li>2、vue-router路由参数示例代码
+<img src="imgs/d4-3.png" alt="d4-3.png"></li>
+</ul>
+<h3 id="1-0-5-vue2-0-url-">1.0.5 vue2.0的路由参数定义实现url的传值</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router路由参数示例代码
+<img src="imgs/d4-4.png" alt="d4-4.png"></li>
+</ul>
+<h3 id="1-0-6-vue1-">1.0.6 vue1中嵌套路由的写法</h3>
+<ul>
+<li>1、请下载匹配Vue1.0版本的vue-router文件</li>
+<li>2、vue-router嵌套路由示例代码
+<img src="imgs/d4-5.png" alt="d4-5.png"></li>
+</ul>
+<h3 id="1-0-7-vue1-">1.0.7 vue1中嵌套路由的写法</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router嵌套路由示例代码
+<img src="imgs/d4-6.png" alt="d4-6.png"></li>
+</ul>
+<h2 id="2-0-watch-computed">2.0 watch与计算属性computed</h2>
+<pre><code>    watch与computed均可以监控程序员想要监控的对象，当这些对象发生了改变以后，可以触发回调函数做一些逻辑处理
+</code></pre><h3 id="2-0-1-watch-">2.0.1 watch用法举例</h3>
+<ul>
+<li><p>监听data中定义的属性</p>
+<p> <img src="imgs/d4-7.png" alt="d4-7.png"></p>
+</li>
+<li><p>监听路由对象$route</p>
+<p> <img src="imgs/d4-8.png" alt="d4-8.png"></p>
+</li>
+</ul>
+<h3 id="2-0-2-computed-">2.0.2 computed用法举例</h3>
+<ul>
+<li><p>监听data中定义的属性</p>
+<p> <img src="imgs/d4-9.png" alt="d4-9.png"></p>
+</li>
+</ul>
+<h2 id="3-0-vue1-0-vue2-0-">3.0 Vue1.0与Vue2.0区别总结</h2>
+<pre><code>    总结前3天中学习知识点中Vue1.0和2.0的区别
+</code></pre><ul>
+<li><p>总结如下</p>
+<p> <img src="imgs/d4-10.png" alt="d4-10.png"></p>
+</li>
+</ul>
+<h2 id="4-0-webpack">4.0 webpack</h2>
+<h3 id="4-0-1-webpack-">4.0.1 webpack介绍</h3>
+<ul>
+<li>webpack是一个资源的打包工具，分为1.0和2.0版本，可以将 .js,  .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现</li>
+<li>webpack 1.0版本官网：<a href="https://webpack.github.io/docs/usage.html">https://webpack.github.io/docs/usage.html</a></li>
+<li>webpack 2.0版本官网：<a href="https://webpack.js.org/">https://webpack.js.org/</a></li>
+<li>在这个项目中使用webpack 1.14.0</li>
+<li>node环境的安装</li>
+</ul>
+<pre><code>     webpack是基于nodejs运行的，所以在安装webpack之前必须先安装nodejs环境,安装步骤如下
+      1、去 https://nodejs.org/en/ 中下载当前操作系统匹配的版本,windows下软件名称通常叫做 node.exe
+      2、双击node.exe一路安装好，由于node.exe已经包含了npm工具，所以npm也能正常使用了
+      3、由于直接使用npm install 安装第三方包是去国外网站上下载，有可能会被墙而安装失败，所以我们要将下载源切换到国内淘宝上因此需要利用 npm install nrm -g安装一个全局的nrm
+      4、安装好nrm以后，在cmd命令面板中输入： nrm use taobao 将下载源切换到淘宝，可以使用 nrm ls 查看当前使用的下载源
+      5、也可安装淘宝提供的类似于npm的工具 cnpm来替代npm安装node包,安装包命令和npm一样，安装cnpm命令： npm install cnpm -g
+</code></pre><ul>
+<li>webpack的安装</li>
+</ul>
+<pre><code>    安装webpack步骤：  
+    第一种安装方式： 
+        在cmd命令行面板中 执行： npm install webpack@1.14.0 -g 将webpack1.14.0版本安装为全局就能够在cmd命令行面板中使用webpack指令了   
+
+    第二种安装方式： 
+        在cmd命令行面板中 执行： cnpm install webpack@1.14.0 -g 将webpack1.14.0版本安装为全局就能够在cmd命令行面板中使用webpack指令了
+</code></pre><h3 id="4-0-1-webpack-webpack-config-js-">4.0.1 webpack常用指令和webpack.config.js配置文件</h3>
+<ul>
+<li>webpack常用指令</li>
+</ul>
+<pre><code>      webpack 入口文件.js 输出文件.js
+      webpack         // 最基本的启动webpack的方法，默认查找名称为 webpack.config.js文件
+      webpack --config webpack.config.js    // 指定配置文件    
+
+      webpack -p      // 对打包后的文件进行压缩
+      webpack -d      // 提供source map，方便调式代码
+</code></pre><ul>
+<li>webpack.config.js配置文件的作用</li>
+</ul>
+<pre><code>    如果只在cmd命令面板中输入 webpack指令，后面不跟任何参数的话，则默认查找的是 webpack.config.js文件，在这个文件中可以配置入口文件，输出文件以及相关loader和插件等,以增强webpack的功能
+</code></pre><ul>
+<li>一个常用webpack1.0版本的webpack.config.js文件结构：</li>
+</ul>
+<pre><code class="lang-javascript">// 导入html-webpack-plugin 包，用来根据模板自动生成index.html
+var htmlwp = require(&#39;html-webpack-plugin&#39;);
+
+module.exports={    
+    entry:&#39;./src/main.js&#39;, // 1.0 定义打包的入口文件路径
+    output:{
+        path:&#39;./dist&#39;,   //打包以后的文件存放目录
+        filename:&#39;build.js&#39;  // 打包以后生成的文件名称
+    },
+    module:{
+        loaders:[
+            {
+                // 将当前项目中所有的.js文件都要进行es6转es5操作，node_moudels除外
+                test:/\.js$/,   //表示当前要打包的文件的后缀正则表达式
+                // loader:&#39;babel-loader?presets[]=es2015&#39;, //如果写到这里，将来在打包.vue文件的时候会报错，表示先利用css-loader解析.css文件，再调用style-loader打包
+                loader:&#39;babel-loader&#39;,
+                exclude:/node_modules/  //node_modules中的所有.js文件不去转换，提高打包性能
+            }            
+        ]
+    },
+    babel:{
+         presets: [&#39;es2015&#39;],  //表示es6转es5
+         plugins: [&#39;transform-runtime&#39;]  //这句代码就是为了解决打包.vue文件不报错
+    },
+    plugins:[
+        new htmlwp({
+          title: &#39;首页&#39;,  //生成的页面标题
+          filename: &#39;index.html&#39;, //webpack-dev-server在内存中生成的文件名称，自动将build注入到这个页面底部，才能实现自动刷新功能
+          template: &#39;index1.html&#39; //根据index1.html这个模板来生成(这个文件请你自己生成)
+        })
+    ]
+}
+</code></pre>
+<h3 id="4-0-2-webpack-loader-">4.0.2 webpack中loader介绍</h3>
+<ul>
+<li>loader介绍</li>
+</ul>
+<pre><code>    webpack本身不支持css,less,sass,js,image等相关资源的打包工作的，它仅仅提供了一个基础的框架，在这个框架上借助于相关的loader才可以实现css,less,sass,js,image等相关资源的打包工作
+</code></pre><h3 id="4-0-3-webpack-">4.0.3 webpack相关配置</h3>
+<pre><code>   在使用loader之前需要在当前项目目录下打开cmd命令面板，输入: npm init 初始化一个 package.json文件来存放相关的 loader包
+</code></pre><h4 id="4-0-3-1-css-">4.0.3.1 打包css资源演示</h4>
+<pre><code>webpack中使用css-loader和style-loader这两个loader来处理css资源的打包工作，所以使用前必须在项目中先安装这两个包:
+npm i css-loader style-loader --save-dev
+</code></pre><ul>
+<li>在webpack.config.js中配置这两个loader</li>
+</ul>
+<p><img src="imgs/d4-11.png" alt="d4-11.png"></p>
+<ul>
+<li>在项目中建立一个site.css文件，并且在main.js中导入</li>
+</ul>
+<p><img src="imgs/d4-12.png" alt="d4-12.png"></p>
+<ul>
+<li>在cmd中执行webpack命令</li>
+</ul>
+<p><img src="imgs/d4-13.png" alt="d4-13.png"></p>
+<h4 id="4-0-3-2-sass-">4.0.3.2 打包sass资源演示</h4>
+<pre><code>webpack中使用sass-loader，css-loader，style-loader来处理.scss文件的打包工作,而sass-loader需要依赖于node-sass所以使用前必须在项目中先安装这些包，
+并且node-sass的某些文件下载是需要去google上的，为了防止被墙而导致安装失败，所以建议使用cnpm来安装：
+cnpm install node-sass sass-loader css-loader style-loader --save-dev
+</code></pre><ul>
+<li>在webpack.config.js中配置这两个loader</li>
+</ul>
+<p><img src="imgs/d4-14.png" alt="d4-14.png"></p>
+<ul>
+<li>在项目中建立一个site1.scss文件，并且在main.js中导入</li>
+</ul>
+<p><img src="imgs/d4-15.png" alt="d4-15.png"></p>
+<ul>
+<li>在cmd中执行webpack命令</li>
+</ul>
+<pre><code>  在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+  此时检查build.js文件的内容，sass语法是变成了css语法表示打包成功
+</code></pre><h4 id="4-0-3-3-less-">4.0.3.3 打包less资源演示</h4>
+<pre><code>需要安装的node包有：
+    css-loader：  编译css
+    style-loader：编译css
+    less-loader： 编译less
+    less:  less-loader的依赖包
+
+    在项目根目录下打开cmd命令面板，输入：
+    npm install less less-loader style-loader css-loader --save-dev 回车即可完成安装
+</code></pre><ul>
+<li>在webpack.config.js中配置这两个loader</li>
+</ul>
+<p><img src="imgs/d4-16.png" alt="d4-16.png"></p>
+<ul>
+<li>在项目中建立一个site1.scss文件，并且在main.js中导入</li>
+</ul>
+<p><img src="imgs/d4-17.png" alt="d4-17.png"></p>
+<ul>
+<li>在cmd中执行webpack命令</li>
+</ul>
+<pre><code>  在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+  此时检查build.js文件的内容，less语法是变成了css语法表示打包成功
+</code></pre><h4 id="4-0-3-4-url-">4.0.3.4 打包url()请求的资源</h4>
+<pre><code>需要安装的node包有：
+    url-loader：打包通过url()方式的请求资源
+    file-loader: url-loader的依赖loader
+
+    在项目根目录下打开cmd命令面板，输入：
+    npm install url-loader file-loader --save-dev 回车即可完成安装
+</code></pre><ul>
+<li>在webpack.config.js中配置这两个loader</li>
+</ul>
+<p><img src="imgs/d4-18.png" alt="d4-18.png"></p>
+<ul>
+<li>在site.css文件导入一个图片</li>
+</ul>
+<p><img src="imgs/d4-19.png" alt="d4-19.png"></p>
+<ul>
+<li>在cmd中执行webpack命令</li>
+</ul>
+<pre><code>  在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+  检查是否成功分两种情况：
+  1、如果打包的图片大小大于配置文件中 url-loader?limit= 中的limit值的话，则会在目录下看到一张单独的一个图片
+  2、如果打包的图片大小小于等于配置文件中 url-loader?limit= 中的limit值的话，则会将图片以base64格式存储在build.js中
+
+  请按照上述两种情况去验证是否打包成功
+</code></pre><h4 id="4-0-3-5-ecmascript6-ecmascript5-">4.0.3.5 ECMAScript6语法转ECMAScript5语法</h4>
+<pre><code>需要安装的node包有：
+    babel-core
+    babel-loader
+    babel-preset-es2015
+    babel-plugin-transform-runtime：这个包主要是在打包.vue组件页面中的es6语法需要
+
+
+    在项目根目录下打开cmd命令面板，输入：
+    npm install babel-core babel-loader babel-preset-es2015 babel-plugin-transform-runtime  --save-dev 回车即可完成安装
+</code></pre><ul>
+<li>在webpack.config.js中配置这两个loader</li>
+</ul>
+<p><img src="imgs/d4-20.png" alt="d4-20.png"></p>
+<ul>
+<li>在main.js中使用es6语法导入site.css</li>
+</ul>
+<pre><code>    import &#39;../statics/css/site.css&#39;
+</code></pre><ul>
+<li>在cmd中执行webpack命令</li>
+</ul>
+<pre><code>  在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+  检查build.js文件中，如果出现了类似于 require(&#39;../statics/css/site.css&#39;); 但是看不到import &#39;../statics/css/site.css&#39; 表示转换成功
+</code></pre>
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>

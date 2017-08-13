@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1/这是MVVM中的v  -->
+    <div id="app">
+        <p>{{ valP }}</p>
+        <!-- 加了v-once的元素只会渲染一次，以后即便数据变化了，也不会重新渲染  -->
+        <div v-once>{{ valDiv }}</div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // 2/这是MVVM中vm
+        var vm = new Vue({
+            el: '#app',
+            // 3/这是MVVM中的m
+            data: {
+                valP: '嘿嘿',
+                valDiv: '咯咯'
+            },
+            beforeCreate: function() {
+                console.log('vm已就绪');
+            },
+            created: function() {
+                console.log('m已就绪');
+            },
+            beforeMount: function() {
+                console.log('v已就绪');
+            },
+            mounted: function() {
+                console.log('项目已运作');
+            },
+            beforeUpdate: function() {
+                console.log('修改数据，页面还没有刷新');
+            },
+            updated: function() {
+                console.log('视图也更新了');
+            },
+            beforeDestroy: function() {
+                console.log('销毁前');
+            },
+            destroyed: function() {
+                console.log('销毁后');
+            }
+        });
+    </script>
+</body>
+</html>

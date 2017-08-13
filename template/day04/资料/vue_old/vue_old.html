@@ -1,0 +1,941 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:vue_old</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<ul>
+<li>Vue中的 MVVM
+<img src="imgs/d1-11.png" alt="d1-11.png"></li>
+</ul>
+<h3 id="1-4-2-vue-vue-">1.4.2 Vue初体验（记住Vue的编写步骤）</h3>
+<p><img src="imgs/d1-12.png" alt="d1-12.png"></p>
+<h3 id="1-4-3-vue-">1.4.3 Vue常用系统指令</h3>
+<ul>
+<li>插值表达式{{}}：</li>
+<li><pre><code>      数据绑定最常见的形式就是使用 “Mustache” 语法（双大括号）的文本插值        
+      例如：&lt;span&gt;Message: {{ msg }}&lt;/span&gt;
+      Mustache 标签将会被替代为对应数据对象上 msg 属性（msg定义在data对象中）的值。
+      无论何时，绑定的数据对象上 msg 属性发生了改变，插值处的内容都会更新。
+
+      {{}}对JavaScript 表达式支持，例如：
+      {{ number + 1 }}
+      {{ ok ? &#39;YES&#39; : &#39;NO&#39; }}
+      {{ message.split(&#39;&#39;).reverse().join(&#39;&#39;) }}
+
+      但是有个限制就是，每个绑定都只能包含单个表达式，如下表达式无效：
+      &lt;!-- 这是语句，不是表达式 --&gt;
+      {{ var a = 1 }}
+      &lt;!-- 流控制也不会生效，请使用三元表达式 --&gt;
+      {{ if (ok) { return message } }}
+</code></pre></li>
+<li><p>v-text</p>
+</li>
+<li><pre><code>      v-text可以将一个变量的值渲染到指定的元素中,例如：
+      &lt;div v-text=&quot;msg&quot;&gt;&lt;/div&gt;
+      new Vue({
+          data:{
+              msg:&#39;hello ivan&#39;                                            
+             }
+      });
+
+      输出结果：
+      &lt;div&gt;hello ivan&lt;/div&gt;
+</code></pre></li>
+<li>v-html</li>
+<li><pre><code>   双大括号和v-text会将数据解释为纯文本，而非 HTML 。
+   为了输出真正的 HTML ，你需要使用 v-html 指令：
+   例如：&lt;div v-html=&quot;rawHtml&quot;&gt;&lt;/div&gt;
+       new Vue({
+           data:{
+               rawHtml:&#39;&lt;h1&gt;hello ivan&lt;/h1&gt;&#39;
+             }
+       })
+
+     被插入的内容都会被当做 HTML,但是对于没有HTML标签的数据绑定时作用同v-text和{{}}
+
+ 注意：使用v-html渲染数据可能会非常危险，因为它很容易导致 XSS（跨站脚本） 攻击，使用的时候请谨慎，能够使用{{}}或者v-text实现的不要使用v-html
+</code></pre></li>
+<li>v-cloak</li>
+<li><pre><code>  v-cloak指令保持在元素上直到关联实例结束编译后自动移除，v-cloak和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+  通常用来防止{{}}表达式闪烁问题
+  例如：
+  &lt;style&gt;
+   [v-cloak] { display: none } 
+  &lt;/style&gt;
+
+   &lt;!-- 在span上加上 v-cloak和css样式控制以后，浏览器在加载的时候会先把span隐藏起来，知道 Vue实例化完毕以后，才会将v-cloak从span上移除，那么css就会失去作用而将span中的内容呈现给用户 --&gt;
+  &lt;span v-cloak&gt;{{msg}}&lt;/span&gt;    
+
+   new Vue({
+            data:{
+                msg:&#39;hello ivan&#39;
+              }
+        })
+</code></pre></li>
+<li><p>v-model以及双向数据绑定</p>
+</li>
+<li><pre><code> 1、在表单控件或者组件上创建双向绑定
+ 2、v-model仅能在如下元素中使用：
+    input
+    select
+    textarea
+    components（Vue中的组件）
+
+ 3、举例：
+    &lt;input type=&quot;text&quot; v-model=&quot;uname&quot; /&gt;
+
+  new Vue({
+           data:{
+               uname:&#39;&#39; //这个属性值和input元素的值相互一一对应，二者任何一个的改变都会联动的改变对方
+             }
+       })
+
+ 4、修饰符（了解）：
+     .lazy - 取代 input 监听 change 事件
+     .number - 自动将输入的字符串转为数字
+     .trim - 自动将输入的内容首尾空格去掉
+</code></pre></li>
+<li><p>v-bind</p>
+</li>
+<li><pre><code> 1、作用：可以给html元素或者组件动态地绑定一个或多个特性，例如动态绑定style和class
+
+ 2、举例：
+     &lt;img v-bind:src=&quot;imageSrc&quot;&gt;   
+     &lt;div v-bind:class=&quot;{ red: isRed }&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:class=&quot;[classA, classB]&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:class=&quot;[classA, { classB: isB, classC: isC }]&quot;&gt;
+     &lt;div v-bind:style=&quot;{ fontSize: size + &#39;px&#39; }&quot;&gt;&lt;/div&gt;
+     &lt;div v-bind:style=&quot;[styleObjectA, styleObjectB]&quot;&gt;&lt;/div&gt;
+
+ 3、缩写形式
+     &lt;img :src=&quot;imageSrc&quot;&gt;
+     &lt;div :class=&quot;{ red: isRed }&quot;&gt;&lt;/div&gt;
+     &lt;div :class=&quot;[classA, classB]&quot;&gt;&lt;/div&gt;
+     &lt;div :class=&quot;[classA, { classB: isB, classC: isC }]&quot;&gt;
+     &lt;div :style=&quot;{ fontSize: size + &#39;px&#39; }&quot;&gt;&lt;/div&gt;
+     &lt;div :style=&quot;[styleObjectA, styleObjectB]&quot;&gt;&lt;/div&gt;
+</code></pre></li>
+<li><p>v-for</p>
+</li>
+<li><p>```</p>
+<p>   1、作用：通常是根据数组中的元素遍历指定模板内容生成内容
+   2、用法举例：</p>
+<pre><code>   &lt;div v-for=&quot;item in items&quot;&gt;
+       {{ item.text }}
+     &lt;/div&gt;
+     new Vuew({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}]                
+             }
+     });
+</code></pre><p>   3、可以为数组索引指定别名（或者用于对象的键）：</p>
+<pre><code>   Vue1.0写法:
+     &lt;div v-for=&quot;(index,item) in items&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(key,val) in user&quot;&gt;&lt;/div&gt;
+       new Vue({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}],
+             user:{uname:&#39;ivan&#39;,age:32}
+             }
+     });
+
+   Vue2.0写法:
+     &lt;div v-for=&quot;(item, index) in items&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(val, key) in user&quot;&gt;&lt;/div&gt;
+     &lt;div v-for=&quot;(val, key, index) in user&quot;&gt;&lt;/div&gt;            
+      new Vue({
+         data:{
+             items:[{text:&#39;1&#39;},{text:&#39;2&#39;}],
+             user:{uname:&#39;ivan&#39;,age:32}
+             }
+     });
+
+4、v-for 默认行为试着不改变整体(为了性能考虑的设计)，而是替换元素。迫使其重新排序的元素,在Vue2.0版本中需要提供一个 key 的特殊属性，在Vue1.0版本中需要提供一个 track-by=&quot;$index&quot;:
+
+Vue2.0写法：
+&lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+   {{ item.text }}
+ &lt;/div&gt;
+
+Vue1.0写法：
+&lt;div v-for=&quot;item in items&quot; track-by=&quot;$index&quot;&gt;
+   {{ item.text }}
+ &lt;/div&gt;
+</code></pre><p>   5、vue1.0与vue2.0对于v-for使用区别总结：</p>
+<pre><code>   1、vue1.0中有$index ，而vue2.0中将$index移除
+   2、vue1.0中 (index,item) in list  而 vue2.0 变成了 (item,index) in list的写法
+   3、vue1.0中使用 track-by来标记dom对象的唯一性，vue2.0中改成了 :key
+</code></pre></li>
+</ul>
+<pre><code>
+- v-if
+-
+</code></pre><pre><code>1、作用：根据表达式的值的真假条件来决定是否渲染元素，如果条件为false不渲染（达到隐藏元素的目的），为true则渲染。在切换时元素及它的数据绑定被销毁并重建
+
+2、示例：
+    &lt;!-- Handlebars 模板 --&gt;
+    {{#if isShow}}
+      &lt;h1&gt;Yes&lt;/h1&gt;
+    {{/if}}
+
+    通常我们使用写法居多：
+    &lt;h1 v-if=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+
+    也可以用 v-else 添加一个 “else” 块：
+    &lt;h1 v-if=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+    &lt;h1 v-else&gt;No&lt;/h1&gt;
+
+    注意：v-else 元素必须紧跟在 v-if 元素否则它不能被识别。
+
+     new Vue({
+            data:{
+               isShow:true
+                }
+        });
+</code></pre><pre><code>
+- v-show
+-
+</code></pre><pre><code>1、根据表达式的真假值，切换元素的 display CSS 属性，如果为false，则在元素上添加 display:none来隐藏元素，否则移除display:none实现显示元素
+
+
+2、示例：
+     &lt;h1 v-show=&quot;isShow&quot;&gt;Yes&lt;/h1&gt;
+
+     new Vue({
+            data:{
+               isShow:true
+                }
+        });
+
+3、v-if和v-show的总结：
+     v-if和v-show 都能够实现对一个元素的隐藏和显示操作,但是v-if是将这个元素添加或者移除到dom中，而v-show
+     是在这个元素上添加 style=&quot;display:none&quot;和移除它来控制元素的显示和隐藏的
+</code></pre><pre><code>
+- v-on
+-
+</code></pre><pre><code>  1、作用：绑定事件监听，表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略，用在普通的html元素上时，只能监听 原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。
+
+  2、常用事件：
+      v-on:click
+      v-on:keydown
+      v-on:keyup
+      v-on:mousedown
+      v-on:mouseover
+      v-on:submit
+      ....
+
+  3、v-on提供了很多事件修饰符来辅助实现一些功能，例如阻止冒泡等
+    事件修饰符有如下：
+    .stop - 调用 event.stopPropagation()。
+    .prevent - 调用 event.preventDefault()。
+    .capture - 添加事件侦听器时使用 capture 模式。
+    .self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+    .{keyCode | keyAlias} - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+    .native - 监听组件根元素的原生事件。
+
+  4、示例：
+      &lt;!-- 方法处理器 --&gt;
+    &lt;button v-on:click=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 内联语句 --&gt;
+    &lt;button v-on:click=&quot;doThat(&#39;hello&#39;, $event)&quot;&gt;&lt;/button&gt;
+    &lt;!-- 缩写 --&gt;
+    &lt;button @click=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 停止冒泡 --&gt;
+    &lt;button @click.stop=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 阻止默认行为 --&gt;
+    &lt;button @click.prevent=&quot;doThis&quot;&gt;&lt;/button&gt;
+    &lt;!-- 阻止默认行为，没有表达式 --&gt;
+    &lt;form @submit.prevent&gt;&lt;/form&gt;
+    &lt;!--  串联修饰符 --&gt;
+    &lt;button @click.stop.prevent=&quot;doThis&quot;&gt;&lt;/button&gt;
+
+
+   5、v-on的缩写形式：可以使用@替代 v-on:
+    &lt;button @click=&quot;doThis&quot;&gt;&lt;/button&gt;
+</code></pre><pre><code>
+
+### 1.4.4 利用系统指令实现品牌管理案例
+- 目的
+</code></pre><pre><code>  通过案例熟悉Vue系统指令的用法和结构的写法练习，做到知识点的巩固和学会应用，并且在案例的扩展需求中，学习Vue新知识点，做到先有需求，再有知识点学习，最后到知识点的应用，让学员学习知识点的同时学会知识点的应用
+</code></pre><pre><code>
+- 实现品牌列表数据展示
+- 
+  + 效果
+
+    ![d1-13.png](imgs/d1-13.png &quot;&quot;)
+
+
+  + 代码
+
+    ![d1-14.png](imgs/d1-14.png &quot;&quot;)
+
+- 实现品牌数据添加
+- 
+ + 效果
+
+    ![d1-15.png](imgs/d1-15.png &quot;&quot;)
+
+
+ + 代码
+
+    ![d1-16-1.png](imgs/d1-16-1.png &quot;&quot;)
+    ![d1-16-2.png](imgs/d1-16-2.png &quot;&quot;)
+
+- 实现品牌数据删除
+ + 效果
+
+    ![d1-17.png](imgs/d1-17.png &quot;&quot;)
+
+ + 代码
+
+     ![d1-18.png](imgs/d1-18.png &quot;&quot;)
+     ![d1-19.png](imgs/d1-19.png &quot;&quot;)
+
+- 实现根据品牌名称过滤符合条件的数据
+ + 效果
+
+     ![d1-20.png](imgs/d1-20.png &quot;&quot;)
+
+ + 代码  
+
+     ![d1-21.png](imgs/d1-21.png &quot;&quot;)
+
+### 1.4.5 Vue在Chrome浏览器的调试工具Vue-Devtools
+- 作用
+
+    ```html
+       Vue-Devtools是Chrome浏览器的一个扩展，通过Vue-Devtools可以实现在Chrome浏览器的调试工具栏中查看到Vue开发页面的相关数据对象，方法，事件，状态信息，方便程序员监控和调试解决问题
+</code></pre><ul>
+<li><p>地址</p>
+<pre><code>      GitHub地址：https://github.com/vuejs/vue-devtools
+
+      Chrome插件地址：https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN
+</code></pre></li>
+<li><p>通过Chrome插件地址安装插件(注意：这种方式需要翻墙)</p>
+<ul>
+<li><p>1、在Chrome浏览器中打开地址：<a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN">https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=zh-CN</a></p>
+</li>
+<li><p>2、点击里面的“+ 添加至CHROME” 按钮即可安装插件</p>
+<p> <img src="imgs/d1-22.png" alt="d1-22.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>3、安装以后，在Chome浏览器中打开使用Vue开发的站点后按F12打开调试工具即可看到Vue调试工具</p>
+<p><img src="imgs/d1-23.png" alt="d1-23.png"></p>
+</li>
+</ul>
+<ul>
+<li>通过Vue-DevTools源码安装（需要先安装node.exe）<ul>
+<li>1、<a href="https://nodejs.org/en/">https://nodejs.org/en/</a> 下载node.exe安装</li>
+<li>2、去<a href="https://github.com/vuejs/vue-devtools">https://github.com/vuejs/vue-devtools</a> 下载到文件</li>
+<li>3、进入vue-devtools-master工程 先执行npm install再执行npm run build</li>
+<li>4、进入vue-devtools-master\shells\chrome文件夹中修改mainifest.json 中的persistant为true</li>
+<li>5、打开谷歌浏览器设置---&gt;扩展程序--&gt;勾选开发者模式---&gt;加载已解压的扩展程序---&gt;选择“vue-devtools-master\shells下的chrome”文件夹，至此恭喜已经安装成功！</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-v-on-">1 v-on按键修饰符</h2>
+<h3 id="1-1-">1.1 作用说明</h3>
+<pre><code>    文档地址：http://cn.vuejs.org/v2/guide/events.html#按键修饰符
+
+    在监听键盘事件时，我们经常需要监测常见的键值。 Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+    .enter
+    .tab
+    .delete (捕获 “删除” 和 “退格” 键)
+    .esc
+    .space
+    .up
+    .down
+    .left
+    .right
+    1.0.8+ 支持单字母按键别名。
+</code></pre><p>###1.2 可以自定义按键别名</p>
+<pre><code>    在Vue2.0 中默认的按键修饰符是存储在 Vue.config.keyCodes中
+    // 例如在Vue2.0版本中扩展一个f1的按键修饰符写法：
+    Vue.config.keyCodes.f1 = 112
+
+
+    在1.0.17+ 中默认的按键修饰符是存储在Vue.directive(&#39;on&#39;).keyCodes中                                         
+
+    // 例如在Vue1.0中扩展一个f1的按键修饰符写法：
+    Vue.directive(&#39;on&#39;).keyCodes.f1 = 112
+</code></pre><h3 id="1-3-v-on-enter-">1.3 利用v-on的.enter按键修饰符实现品牌管理的新增按钮功能</h3>
+<ul>
+<li><p>效果图</p>
+<p>  <img src="imgs/d2-1.png" alt="d2-1.png"></p>
+</li>
+</ul>
+<ul>
+<li><p>实现代码</p>
+<p>  <img src="imgs/d2-2.png" alt="d2-2.png">
+  <img src="imgs/d2-3.png" alt="d2-3.png"></p>
+</li>
+</ul>
+<h2 id="2-">2 自定义指令</h2>
+<pre><code>    当Vue提供的系统指令不能满足需求时，就需要自己定义指令来进行扩展，例如，定义一个v-focus指令来实现文本框的自动获取焦点功能
+</code></pre><h3 id="2-1-">2.1 自定义属性指令</h3>
+<ul>
+<li>写法格式</li>
+</ul>
+<pre><code>    定义指令：
+    Vue.directive(&#39;指令ID，不需要增加v-前缀&#39;,function(){
+        //实现指令的业务
+        this.el //代表使用这个指令的元素对象
+    });
+
+    使用指令(当做一个元素的属性使用)：
+    &lt;input type=&quot;text&quot; v-指令ID /&gt;
+</code></pre><ul>
+<li>（属性指令应用举例）利用自定义属性指令实现自动获取焦点功能</li>
+</ul>
+<pre><code>    定义指令：
+    //定义一个 v-focus的属性自定义指令
+    Vue.directive(&#39;focus&#39;,function(){
+        this.el.focus(); //实现文本框的自动获取焦点
+    });
+
+    使用指令：
+    &lt;input type=&quot;text&quot; v-focus /&gt;
+</code></pre><h4 id="3-">3 自定义过滤器</h4>
+<ul>
+<li>定义方式</li>
+</ul>
+<pre><code>    可以在 new Vue({filters：{}})中的filters中注册一个私有过滤器
+
+    定义格式：
+    new Vue({
+    el:&#39;#app&#39;,    
+    filters:{        
+        &#39;过滤器名称&#39;:function(管道符号|左边参数的值,参数1,参数2,....) {
+          return 对管道符号|左边参数的值做处理以后的值
+        })    
+    }
+    });
+
+    Vue1.0 使用写法：
+    &lt;span&gt;{{ msg | 过滤器id &#39;参数1&#39; &#39;参数2&#39; .... }}&lt;/span&gt;
+
+    Vue2.0 使用写法：
+    &lt;span&gt;{{ msg | 过滤器id(&#39;参数1&#39; &#39;参数2&#39; ....) }}&lt;/span&gt;
+</code></pre><ul>
+<li>(应用示例)自定义全局过滤器实现日期格式化</li>
+</ul>
+<pre><code>   1、 定义全局的日期格式化过滤器：
+
+        new Vue({
+            el:&#39;#app&#39;,
+            data:{
+                time:new Date()
+            },
+            filters:{
+                //定义在 VM中的filters对象中的所有过滤器都是私有过滤器
+                datefmt:function(input,splicchar){
+                    var date = new Date(input); 
+                    var year = date.getFullYear();
+                    var m = date.getMonth() + 1;
+                    var d = date.getDate();            
+                    var fmtStr = year+splicchar+m +splicchar+d;
+                    return fmtStr; //返回输出结果
+                }
+            }
+        });
+
+   2、使用
+
+      &lt;div id=&quot;app&quot;&gt;
+        {{ time | datefmt &#39;-&#39; }}  //Vue1.0传参写法
+
+        {{ time | datefmt(&#39;-&#39;) }} //Vue2.0传参写法
+
+      &lt;/div&gt;
+</code></pre><h4 id="3-2-2-">3.2.2 自定义全局过滤器</h4>
+<ul>
+<li>定义方式</li>
+</ul>
+<pre><code>    可以用全局方法 Vue.filter() 注册一个全局自定义过滤器，它接收两个参数：过滤器 ID 和过滤器函数。过滤器函数以值为参数，返回转换后的值
+
+    定义格式：
+    Vue.filter(&#39;过滤器名称&#39;, function (管道符号|左边参数的值,其他参数1,其他参数2,....) {
+      return 对管道符号|左边参数的值做处理以后的值
+    })
+
+    Vue1.0 使用：
+    &lt;span&gt;{{ msg | 过滤器名称 &#39;参数1&#39; &#39;参数2&#39; .... }}&lt;/span&gt;
+
+    Vue2.0 使用：
+    &lt;span&gt;{{ msg | 过滤器名称(&#39;参数1&#39; &#39;参数2&#39; ....) }}&lt;/span&gt;
+</code></pre><ul>
+<li>(应用示例)自定义全局过滤器实现日期格式化</li>
+</ul>
+<pre><code>   1、 定义全局的日期格式化过滤器：
+
+        Vue.filter(&#39;datefmt&#39;,function(input,splicchar){
+            var date = new Date(input); 
+            var year = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();            
+            var fmtStr = year+splicchar+m +splicchar+d;
+            return fmtStr; //返回输出结果
+        });    
+
+   2、使用
+
+      &lt;div id=&quot;app&quot;&gt;
+        {{ time | datefmt &#39;-&#39; }}  //Vue1.0传参写法
+
+        {{ time | datefmt(&#39;-&#39;) }} //Vue2.0传参写法
+
+      &lt;/div&gt;
+    &lt;script&gt;  
+        new Vue({
+            el:&#39;#app1&#39;,
+            data:{
+                time:new Date()
+            }
+        });
+    &lt;/script&gt;
+</code></pre><h2 id="1-0-vue-">1.0 Vue过渡动画</h2>
+<pre><code>    通过 Vue.js 的过渡系统，可以在元素从 DOM 中插入或移除时自动应用过渡效果。Vue.js 会在适当的时机为你触发 CSS 过渡或动画
+    常用场景有：
+    1、条件渲染 （使用 v-if）
+    2、条件展示 （使用 v-show）
+    3、动态组件
+</code></pre><h3 id="1-0-1-transition-">1.0.1 transition的作用</h3>
+<p>2、 在Vue2.0版本中改变成了由 transition特性的写法变成了 <transition></transition>的写法<br>    <transition name="fade">
+    <p v-if="show">hello</p>
+    </transition></p>
+<h3 id="1-0-2-vue-">1.0.2 Vue中过渡动画的几种常用写法</h3>
+<ul>
+<li><p>利用css控制过渡动画</p>
+<ul>
+<li>Vue2.0写法
+   <img src="imgs/d3-2.png" alt="d3-2.png">   </li>
+</ul>
+</li>
+<li><p>利用animate.css控制过渡动画</p>
+<ul>
+<li>Vue2.0写法<pre><code>![d3-4.png](imgs/d3-4.png &quot;&quot;)  
+</code></pre></li>
+</ul>
+</li>
+<li><p>利用钩子函数控制过渡动画</p>
+<ul>
+<li>Vue2.0 过渡动画API文档：<a href="http://cn.vuejs.org/v2/guide/transitions.html">http://cn.vuejs.org/v2/guide/transitions.html</a></li>
+</ul>
+</li>
+<li><p>Vue2.0钩子函数</p>
+</li>
+</ul>
+<pre><code>     1、过渡动画进入
+          before-enter      过渡动画进入之前，一般在这个方法中定义目标元素的初始位置
+          enter             过渡动画进入中，在这个方法中定义目标元素的结束位置
+          after-enter       过渡动画结束后，通常在这个方法里面重置初始值
+          enter-cancelled   取消过渡动画时被调用
+
+      2、过渡动画离开
+          before-leave      动画离开之前触发    
+          leave             过渡动画进入中触发
+          after-leave       过渡动画离开结束后
+          leave-cancelled   取消过渡动画时被调用
+</code></pre><p>   3、使用示例：
+   <img src="imgs/d3-6.png" alt="d3-6.png"></p>
+<h2 id="2-0-vue-">2.0 Vue组件</h2>
+<pre><code>    组件（Component）是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码
+</code></pre><h3 id="2-0-1-">2.0.1 组件的定义和注册</h3>
+<ul>
+<li><p>写法1：使用Vue.extend方法定义组件，使用 Vue.component方法注册组件</p>
+<p> <img src="imgs/d3-7.png" alt="d3-7.png"></p>
+</li>
+<li><p>写法2:使用 Vue.component方法定义注册组件一步到位</p>
+<p> <img src="imgs/d3-8.png" alt="d3-8.png"></p>
+</li>
+<li><p>写法3：将组件内容定义到template模板中</p>
+<p> <img src="imgs/d3-9.png" alt="d3-9.png"></p>
+</li>
+<li><p>写法4：将组件内容定义到类型为 x-template的script模板中</p>
+<p> <img src="imgs/d3-10.png" alt="d3-10.png">    </p>
+</li>
+</ul>
+<h3 id="2-0-2-">2.0.2 组件中实现指令以及事件绑定</h3>
+<p>   <img src="imgs/d3-11.png" alt="d3-11.png"></p>
+<h3 id="2-0-3-">2.0.3 组件中注册子组件</h3>
+<p>   <img src="imgs/d3-12.png" alt="d3-12.png"></p>
+<h3 id="2-0-4-component-is-">2.0.4 组件中利用component中的is来实现组件切换</h3>
+<p>   <img src="imgs/d3-13.png" alt="d3-13.png"></p>
+<h3 id="2-0-5-">2.0.5 实现父组件传值给子组件</h3>
+<p>   <img src="imgs/d3-14.png" alt="d3-14.png"></p>
+<h3 id="2-0-6-">2.0.6 实现子组件传值给父组件</h3>
+<p>   <img src="imgs/d3-15.png" alt="d3-15.png"></p>
+<h3 id="2-0-7-v-el-dom-">2.0.7 通过v-el获取到dom对象</h3>
+<p>   <img src="imgs/d3-16.png" alt="d3-16.png"></p>
+<h3 id="2-0-8-v-ref-">2.0.8 通过v-ref获取到整个组件的对象</h3>
+<p>   <img src="imgs/d3-17.png" alt="d3-17.png"></p>
+<h3 id="1-0-3-vue-router-vue2-0-">1.0.3 vue-router在 vue2.0中的使用</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router使用示例代码
+<img src="imgs/d4-2.png" alt="d4-2.png"></li>
+</ul>
+<h3 id="1-0-5-vue2-0-url-">1.0.5 vue2.0的路由参数定义实现url的传值</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router路由参数示例代码
+<img src="imgs/d4-4.png" alt="d4-4.png"></li>
+</ul>
+<h3 id="1-0-7-vue2-">1.0.7 vue2中嵌套路由的写法</h3>
+<ul>
+<li>1、请下载匹配Vue2.0版本的vue-router文件</li>
+<li>2、vue-router嵌套路由示例代码
+<img src="imgs/d4-6.png" alt="d4-6.png"></li>
+</ul>
+<h3 id="2-0-1-watch-">2.0.1 watch用法举例</h3>
+<ul>
+<li><p>监听data中定义的属性</p>
+<p> <img src="imgs/d4-7.png" alt="d4-7.png"></p>
+</li>
+<li><p>监听路由对象$route</p>
+<p> <img src="imgs/d4-8.png" alt="d4-8.png"></p>
+</li>
+</ul>
+<h3 id="2-0-2-computed-">2.0.2 computed用法举例</h3>
+<ul>
+<li><p>监听data中定义的属性</p>
+<p> <img src="imgs/d4-9.png" alt="d4-9.png"></p>
+</li>
+</ul>
+<h3 id="4-0-1-webpack-">4.0.1 webpack介绍</h3>
+<ul>
+<li>webpack是一个资源的打包工具，分为1.0和2.0版本，可以将 .js,  .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现</li>
+<li>webpack 1.0版本官网：<a href="https://webpack.github.io/docs/usage.html">https://webpack.github.io/docs/usage.html</a></li>
+<li>webpack 2.0版本官网：<a href="https://webpack.js.org/">https://webpack.js.org/</a></li>
+<li>在这个项目中使用webpack 1.14.0</li>
+<li>node环境的安装</li>
+</ul>
+<pre><code>     webpack是基于nodejs运行的，所以在安装webpack之前必须先安装nodejs环境,安装步骤如下
+      1、去 https://nodejs.org/en/ 中下载当前操作系统匹配的版本,windows下软件名称通常叫做 node.exe
+      2、双击node.exe一路安装好，由于node.exe已经包含了npm工具，所以npm也能正常使用了
+      3、由于直接使用npm install 安装第三方包是去国外网站上下载，有可能会被墙而安装失败，所以我们要将下载源切换到国内淘宝上因此需要利用 npm install nrm -g安装一个全局的nrm
+      4、安装好nrm以后，在cmd命令面板中输入： nrm use taobao 将下载源切换到淘宝，可以使用 nrm ls 查看当前使用的下载源
+      5、也可安装淘宝提供的类似于npm的工具 cnpm来替代npm安装node包,安装包命令和npm一样，安装cnpm命令： npm install cnpm -g
+</code></pre><h3 id="4-0-2-webpack-loader-">4.0.2 webpack中loader介绍</h3>
+<ul>
+<li>loader介绍</li>
+</ul>
+<pre><code>    webpack本身不支持css,less,sass,js,image等相关资源的打包工作的，它仅仅提供了一个基础的框架，在这个框架上借助于相关的loader才可以实现css,less,sass,js,image等相关资源的打包工作
+</code></pre><h3 id="4-0-3-webpack-">4.0.3 webpack相关配置</h3>
+<pre><code>   在使用loader之前需要在当前项目目录下打开cmd命令面板，输入: npm init 初始化一个 package.json文件来存放相关的 loader包
+</code></pre><ul>
+<li>.vue组件页面的写法结构</li>
+</ul>
+<pre><code>    1、&lt;template&gt;&lt;div class=&quot;tmpl&quot;&gt;&lt;/div&gt;由于是vue2.0 所以这个里面一定要放一个根元素，可以放vue的指令 v-&lt;/template&gt;
+
+    2、&lt;script&gt; export default{data:{}} -&gt; new Vue({data:{}}) 就是导出一个 Vue的实例  &lt;/script&gt;
+
+    3、&lt;style&gt;&lt;/style&gt;  中的样式是全局的
+        &lt;style scoped&gt;&lt;/style&gt; 中的样式是当前组件的
+</code></pre><h2 id="3-0-webpack-vue-router-vue2-0-">3.0 webpack项目结构中集成vue-router步骤（Vue2.0写法）</h2>
+<ul>
+<li><p>1、安装vue-router: npm install vue-router --save</p>
+</li>
+<li><p>2、在webpack打包入口js文件中(entry指定的那个文件main.js)配置如下
+<img src="imgs/d5-1.png" alt="d5-1.png"></p>
+</li>
+<li><p>3、在入口App.vue组件中添加如下代码
+<img src="imgs/d5-2.png" alt="d5-2.png"></p>
+</li>
+<li><p>4、执行 npm run dev 就可以打开系统里面的两个超链接，点击即可实现页面跳转</p>
+</li>
+</ul>
+<h2 id="4-0-vue-mint-ui-">4.0 Vue移动组件mint-ui使用</h2>
+<pre><code>Vue拥有很多的第三方开发的PC端或者移动端UI组件，此项目中主要用到了Vue移动端组件：mint-ui
+
+类似的移动端组件还有:
+    1、vux
+        - vux关于升级到vue2.0:https://vux.li/?x-page=github_readme#/zh-CN/upgrade-to-2
+        - vux 组件使用文档：https://vux.li/?x-page=github_readme#/zh-CN/components
+        - vux 组件效果演示：https://vux.li/demos/v2/?x-page=v2-doc-home#/
+        - vux github:https://github.com/airyland/vux
+
+    2、淘宝团队开发的：SUI
+        - 地址：http://m.sui.taobao.org/components/#toolbar
+
+    3、muse-ui
+        - 地址：https://museui.github.io/#/gridList 
+
+
+PC端组件：
+    1、饿了么团队开发的：element
+        - 地址：http://element.eleme.io/#/zh-CN/component/installation
+
+    2、 iView 是一套基于 Vue.js 的开源 UI 组件库，主要服务于 PC 界面的中后台产品
+       - 地址： http://element.eleme.io/#/zh-CN/component/installation
+       - iView2 来了，全面支持 Vue.js 2.x：https://www.talkingcoder.com/article/6395692494071220203
+</code></pre><h3 id="4-0-1-mint-ui-">4.0.1 mint-ui资源介绍</h3>
+<ul>
+<li>官网：<a href="http://mint-ui.github.io/#!/zh-cn">http://mint-ui.github.io/#!/zh-cn</a></li>
+<li>在次项目中是与Vue2.0结合使用，所以请看：<a href="http://mint-ui.github.io/docs/#!/zh-cn2">http://mint-ui.github.io/docs/#!/zh-cn2</a></li>
+</ul>
+<h3 id="4-0-2-mint-ui-">4.0.2 安装mint-ui集成到项目中</h3>
+<ul>
+<li>1、利用：npm install mint-ui --save 命令将mint-ui安装到项目中</li>
+<li><p>2、在main.js中全局导入mint-ui和它的css后即可在任何组件的<template></template>中使用mint-ui组件了
+<img src="imgs/d5-3.png" alt="d5-3.png"></p>
+</li>
+<li><p>3、举例使用mint-ui的按钮组件：可以参考文档：<a href="http://mint-ui.github.io/docs/#!/zh-cn2/button">http://mint-ui.github.io/docs/#!/zh-cn2/button</a>
+<img src="imgs/d5-4.png" alt="d5-4.png"></p>
+</li>
+</ul>
+<h2 id="5-0-vue-mui">5.0 Vue中使用MUI</h2>
+<pre><code>    MUI是最接近原生APP体验的高性能前端框架，MUI不依赖任何第三方JS库，压缩后的JS和CSS文件仅有100+K和60+K
+    我们项目中主要使用它的css布局，对于js特效没有用到
+</code></pre><ul>
+<li>MUI官网：<a href="http://dev.dcloud.net.cn/mui/">http://dev.dcloud.net.cn/mui/</a></li>
+<li>MUI控件使用文档：<a href="http://dev.dcloud.net.cn/mui/ui/">http://dev.dcloud.net.cn/mui/ui/</a></li>
+<li>MUI在线Demo：<a href="http://www.dcloud.io/hellomui/">http://www.dcloud.io/hellomui/</a></li>
+<li><p>hellomui源码下载（完全可以直接拷贝里面的代码来实现自己的功能）：<a href="https://github.com/dcloudio/mui">https://github.com/dcloudio/mui</a></p>
+</li>
+<li><p>在Vue+webpack项目中集成MUI步骤</p>
+</li>
+</ul>
+<pre><code>1、从 https://github.com/dcloudio/mui/tree/master/dist 中下载所有的资源放到项目的statics\mui目录中
+
+2、在main.js中import mui相关css
+
+![d5-6.png](imgs/d5-6.png &quot;&quot;)
+
+3、要实现某个功能只需要按照MUI在线DEMO，找到案例源码页面将效果迁移到项目中
+</code></pre><h2 id="9-0-mian-js-">9.0 mian.js文件基本内容结构</h2>
+<pre><code class="lang-javascript">    通过前面慢慢的演变，main.js文件中的基本内容结构如下：
+    // 1.0 导入vue包
+    import Vue from &#39;vue&#39;;
+
+    // 2.0 导入 App.vue文件
+    import App from &#39;./App.vue&#39;;
+
+    // 3.0 vue-router相关的代码
+    // 3.0.1 导入vue-router这个包
+    import VueRouter from &#39;vue-router&#39;;  //相当于 &lt;script src=&quot;vue-router.js&quot;&gt;
+
+    // 3.0.2 在Vue对象中通过use()方法来使用vue-router对象
+    Vue.use(VueRouter);
+
+    // 3.0.3 定义路由对象并且初始化路由规则
+    // 3.0.3.1 导入需要注册的组件
+    import home from &#39;./components/Home.vue&#39;;
+
+    var vueRouterObj = new VueRouter({
+        linkActiveClass :&#39;mui-active&#39;, //将激活的路由添加一个mui-active类名称
+        routes:[
+            {path:&#39;/&#39;,redirect:&#39;/Home&#39;},
+            {path:&#39;/Home&#39;,component:home},
+        ]
+    });
+    // 4.0 mint-ui的使用
+    // 4.0.1 导入mint-ui的样式
+    import &#39;mint-ui/lib/style.min.css&#39;
+    // 4.0.2 导入mint-ui的组件包
+    import mintUI  from &#39;mint-ui&#39;
+    // 4.0.3 将mintUI对象在Vue中通过use()进行绑定
+    Vue.use(mintUI);
+    // 5.0 导入mui的css
+    import &#39;../statics/mui/css/mui.css&#39;
+    import &#39;../statics/mui/css/icons-extra.css&#39;
+
+
+    // 6.0 使用vue-resource
+    // 6.0.1 导入vue-resource
+    import vueResource  from &#39;vue-resource&#39;
+    // 6.0.2 使用
+    Vue.use(vueResource);
+
+
+    import &#39;../statics/css/site.css&#39;
+    // 最后： 将App中的内容编译解析出来替换index.html中的&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+    new Vue({
+    el:&#39;#app&#39;,
+    router:vueRouterObj,  //使用路由规则对象
+    // render:function(create){create(App);}  es5语法
+    render:create=&gt;create(App) //es6语法
+});
+</code></pre>
+<h2 id="10-0-app-vue-">10.0 创建App.vue根组件</h2>
+<pre><code>    App.vue是整个系统的根组件，其他所有组件将来都是通过vue-router控制将此组件中的&lt;router-view&gt;&lt;/router-view&gt;替换成相应组件的内容
+</code></pre><p><img src="imgs/d5-9.png" alt="d5-9.png"></p>
+<h2 id="11-0-home-vue-">11.0 创建Home.vue根组件和实现</h2>
+<p><img src="imgs/d5-10.png" alt="d5-10.png"></p>
+<h1 id="-">详细内容</h1>
+<h2 id="1-0-home-vue-">1.0 实现首页Home.vue中的功能导航区</h2>
+<p><img src="imgs/d6-1.png" alt="d6-1.png"></p>
+<h2 id="2-0-">2.0 实现新闻列表页面</h2>
+<p><img src="imgs/d6-2.png" alt="d6-2.png"></p>
+<h2 id="3-0-">3.0 实现新闻详情页面</h2>
+<p><img src="imgs/d6-3.png" alt="d6-3.png"></p>
+<h2 id="4-0-">4.0 利用全局过滤器实现日期格式化功能</h2>
+<ul>
+<li>使用 <a href="http://momentjs.cn/">momentjs</a> 实现日期格式化功能</li>
+<li>由于多个页面都需要这个功能，所以这里采取的是注册一个全局过滤器的方式来提供</li>
+</ul>
+<p><img src="imgs/d6-4.png" alt="d6-4.png"></p>
+<h2 id="5-0-">5.0 实现评论子组件</h2>
+<p><img src="imgs/d6-5.png" alt="d6-5.png"></p>
+<h1 id="-">详细内容</h1>
+<h2 id="1-0-">1.0 图片列表页面</h2>
+<p><img src="imgs/d7-1.png" alt="d7-1.png"></p>
+<h2 id="2-0-">2.0 图片详情页面</h2>
+<p><img src="imgs/d7-2.png" alt="d7-2.png"></p>
+<h2 id="3-0-">3.0 图片详情页面中图片预览</h2>
+<ul>
+<li>图片预览功能使用vue-preview 组件实现</li>
+<li>vue-preview使用帮助地址：<a href="https://github.com/LS1231/vue-preview">https://github.com/LS1231/vue-preview</a></li>
+<li>在图文详情页面中的使用</li>
+</ul>
+<p><img src="imgs/d7-3.png" alt="d7-3.png"></p>
+<h2 id="4-0-">4.0 图片详情页面中集成评论组件</h2>
+<ul>
+<li>关键代码如下</li>
+</ul>
+<p><img src="imgs/d7-4.png" alt="d7-4.png"></p>
+<h2 id="5-0-">5.0 商品列表页面</h2>
+<ul>
+<li>商品列表使用MUI的图文表格来实现：<a href="http://www.dcloud.io/hellomui/examples/slider-table-default.html">http://www.dcloud.io/hellomui/examples/slider-table-default.html</a></li>
+</ul>
+<p><img src="imgs/d7-5.png" alt="d7-5.png"></p>
+<h2 id="5-0-">5.0 商品详情页面</h2>
+<pre><code>商品详情页面分为如下区域：
+</code></pre><ul>
+<li><p>1、轮播图</p>
+<pre><code>商品轮播图与首页轮播图的业务其实是一样的，因此这里可以抽出一个子组件来实现轮播功能的复用
+步骤：
+1、在项目的 subcomm文件夹中创建一个名称为： silder.vue 的组件
+2、在silider.vue中实现代码和在图文详情页面中使用：
+</code></pre><p><img src="imgs/d7-6.png" alt="d7-6.png"></p>
+</li>
+<li><p>2、购买区</p>
+<ul>
+<li>购买数量子组件inputNumber.vue的实现
+  <img src="imgs/d7-7.png" alt="d7-7.png"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>3、图文详情</p>
+<ul>
+<li>图文详情的数据来源于：<a href="http://webhm.top:8899/api/goods/getdesc/图文id">http://webhm.top:8899/api/goods/getdesc/图文id</a></li>
+</ul>
+</li>
+<li><p>4、商品评论</p>
+<ul>
+<li>跳转到 subcomm/comment.vue子组件即可</li>
+</ul>
+</li>
+</ul>
+<h1 id="-">详细内容</h1>
+<h2 id="1-0-localstorage-">1.0 商品数据保存到localStorage中</h2>
+<p><img src="imgs/d8-1.png" alt="d8-1.png"></p>
+<h2 id="2-0-">2.0 实现底部购物车徽章数字改变（</h2>
+<p><img src="imgs/d8-2.png" alt="d8-2.png"></p>
+<h2 id="3-0-">3.0 点击&quot;加入购物车&quot;按钮实现动画功能</h2>
+<p> <img src="imgs/d8-3.png" alt="d8-3.png">   </p>
+<h2 id="4-0-">4.0 利用路由的编程式导航实现商品图文介绍页面的跳转</h2>
+<p> <img src="imgs/d8-4.png" alt="d8-4.png"></p>
+<h2 id="4-0-">4.0 利用路由的编程式导航实现商品图文介绍页面的跳转</h2>
+<p> <img src="imgs/d8-4.png" alt="d8-4.png"></p>
+<h2 id="5-0-watch-route-">5.0 利用watch监听$route实现返回功能的统一实现</h2>
+<p> <img src="imgs/d8-5.png" alt="d8-5.png"></p>
+<h2 id="6-0-">6.0 购物车商品列表数据获取</h2>
+<ul>
+<li>实现步骤<ul>
+<li>1、从loacalStorage中获取到所有加入购物车中的商品id和数量</li>
+<li>2、从 <a href="http://webhm.top:8899/api/goods/getshopcarlist/商品id1,商品id2">http://webhm.top:8899/api/goods/getshopcarlist/商品id1,商品id2</a>,... 获取到所有的商品数据后展示</li>
+<li>3、列表中商品的选择开关选择的是mint-ui中的switch组件：<a href="http://mint-ui.github.io/docs/#!/zh-cn2/switch">http://mint-ui.github.io/docs/#!/zh-cn2/switch</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="7-0-">7.0 选择商品总数和总价格的自动计算</h2>
+<p><img src="imgs/d8-6.png" alt="d8-6.png"></p>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>

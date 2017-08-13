@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "url-loader": "^0.5.9"
+  }
+}

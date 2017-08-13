@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1/这是MVVM中的v  -->
+    <div id="app">
+        <div v-keyword:strong="k" v-html="content"></div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.directive('keyword', function(el, obj) {
+            // 先拿到指令的参数与值
+            let tagName = obj.arg || 'i';
+            let k = obj.value;
+
+            // 然后拿到元素的文本，然后通过搜索的关键字动态生成一个匹配文本的正则
+            let text = el.textContent;
+            let reg = new RegExp(k, 'g');
+
+            // 最后使用正则替换文本为咱们处理过的有额外样式的标签
+            // replace方法提供的回调函数最终return什么，就会把匹配到的文本替换成什么
+            // 把替换后的文本添加到元素身上，让你生效
+            el.innerHTML = text.replace(reg, function(all) {
+                let color = 'blue';
+                return `<${tagName} style="color:${color}">${all}</${tagName}>`;
+            });
+        });
+
+        // 2/这是MVVM中vm
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                content: '你们地震了，全国人民为你们哭泣~',
+                k: '你'
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1/这是MVVM中的v  -->
+    <div id="app">
+        <p>{{ time | formatDate('MM-DD-YYYY') }}</p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+
+        // 过滤器回调的第一个值固定为插值表达式中的初始值
+        Vue.filter('formatDate', function(val, format) {
+
+            // 先创建匹配年月日的三个不同正则
+            let yReg = /YYYY/i;
+            let mReg = /MM/i;
+            let dReg = /DD/i;
+
+            // 然后通过val得到相应的年月日
+            let date = new Date(val);
+            let y = date.getFullYear();
+            let m = date.getMonth() + 1;
+            let d = date.getDate();
+
+            // 最后替换
+            return format.replace(yReg, y).replace(mReg, m).replace(dReg, d);
+        });
+        
+        // 2/这是MVVM中vm
+        var vm = new Vue({
+            el: '#app',
+            // 3/这是MVVM中的m
+            data: {
+                time: Date.now()
+            }
+        });
+    </script>
+</body>
+</html>

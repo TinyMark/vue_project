@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1/这是MVVM中的v  -->
+    <div id="app">
+        <p v-if="isTrue" v-focus:a="valDiv">{{ valP }}</p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            bind: function(el) {
+                console.log('指令成功绑定到了元素身上');
+                el.style.color = 'skyblue';
+                console.log(arguments);
+            },
+            inserted: function() {
+                console.log('元素被插入到文档中了');
+            },
+            update: function() {
+                console.log('指令绑定的数据改变了');
+            },
+            unbind: function() {
+                console.log('元素不在了');
+            }
+        });
+
+        // 2/这是MVVM中vm
+        var vm = new Vue({
+            el: '#app',
+            // 3/这是MVVM中的m
+            data: {
+                valP: '嘿嘿',
+                valDiv: '咯咯',
+                isTrue: true,
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:webpack</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="webpack">webpack</h1>
+<ul>
+<li>webpack是一个模块打包工具，默认只能打包js文件</li>
+<li>借助于loader插件，webpack可以将css、img等静态资源也当做模块一起打包</li>
+<li>webpack是基于nodejs运行的，所以在时候前必须保证本地拥有nodejs运行环境</li>
+</ul>
+<h2 id="-">安装</h2>
+<ul>
+<li>安装cnpm<ul>
+<li>npm install -g cnpm --registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a><ul>
+<li>为了保证安装速度与node-sass的安装成功率</li>
+<li>官网：<a href="https://npm.taobao.org/">淘宝NPM镜像</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>先全局安装<ul>
+<li>cnpm i -g webpack<ul>
+<li>安装后可以在命令行工具中运行webpack命令执行打包任务</li>
+</ul>
+</li>
+<li>webpack --version<ul>
+<li>如果打印出版本号证明安装成功</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>项目中本地安装<ul>
+<li>npm init -y<ul>
+<li>如果项目中已存在package.json项目描述文件，忽略执行这条命令</li>
+</ul>
+</li>
+<li>cnpm i webpack --save-dev<ul>
+<li>安装webpack到项目node_modules目录中，并自动配置package.json中的开发依赖</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="-">可能遇到的问题</h2>
+<ul>
+<li>cnpm安装包失败<ul>
+<li>可能是因为你的硬盘文件格式为FAT32，<ul>
+<li>可以在资源管理器中-&gt;右键盘符-&gt;属性，查看本地磁盘文件系统，一般为NTFS</li>
+<li>如果是这种情况那就改用npm安装包</li>
+</ul>
+</li>
+<li>可能是因为你修改过项目文件名导致已安装的包出现错误<ul>
+<li>如果有这种情况，删除整个node_modules，重装本地包</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>webpack构建时报错<ul>
+<li>Error: Cannot find module &#39;webpack/lib/node/NodeTemplatePlugi<ul>
+<li>是因为你没有本地安装webpack</li>
+<li>请运行cnpm install webpack -D</li>
+</ul>
+</li>
+<li>Cannot find module &#39;其他包&#39;<ul>
+<li>是因为你安装包的时候，某些包的依赖没有安装成功</li>
+<li>要么手动cnpm i 提示的包名，要么删除整个node_modules，重装本地包</li>
+</ul>
+</li>
+<li>Invalid configuration object.<ul>
+<li>是因为你的webpack.config.js配置的某些属性名写错了</li>
+<li>找到configuration has an unknown property &#39;plugin&#39;.这句话</li>
+<li>这里就是因为把plugins写成了plugin造成的配置不对报错</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>webpack构建时没有产出文件到dist目录<ul>
+<li>一般是因为output中的path路径配置有误造成的<ul>
+<li>这里咱们使用的是path.resovle(__dirname, &#39;./dist&#39;);</li>
+<li>千万注意是&#39;./dist&#39;，不是&#39;/dist&#39;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>npm run xxx后报语法错误<ul>
+<li>检测package.json中的scripts属性名是不是写错了</li>
+<li>package.json配置文件中不能有注释，并且字符串必须使用双引号包起来</li>
+</ul>
+</li>
+</ul>
+<h2 id="-">基本使用</h2>
+<h5 id="-">入门</h5>
+<h6 id="-">原始开发模式</h6>
+<ol>
+<li>新建一个jq项目<ul>
+<li>保证已全局安装过webpack</li>
+</ul>
+</li>
+<li>项目有如下3个文件<ul>
+<li>jquery.js<ul>
+<li>引入的第三方库</li>
+</ul>
+</li>
+<li>main.js<ul>
+<li>我们自己编写的脚本</li>
+</ul>
+</li>
+<li>index.html<ul>
+<li>页面结构，内部引入jquery.js与main.js</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用浏览器打开index.html<ul>
+<li>弹出body宽高</li>
+</ul>
+</li>
+<li>代码范例<pre><code class="lang-html">&lt;html&gt;
+ &lt;body&gt;
+     &lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+     &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="lang-javascript">var $node = $(&#39;body&#39;);
+console.log($node.width() + &#39; : &#39; + $node.width());
+</code></pre>
+</li>
+</ol>
+<h6 id="-webpack">使用webpack</h6>
+<ol>
+<li>把刚才的项目copy一份</li>
+<li>修改main.js文件<ul>
+<li>通过es6语法导入依赖的jquery模块</li>
+<li>具体修改内容参考下面代码范例</li>
+</ul>
+</li>
+<li>使用命令行工具运行webpack main.js build.js<ul>
+<li>添加-p参数可对打包后文件进行压缩</li>
+<li>添加-d参数可提供source map，方便代码调试</li>
+</ul>
+</li>
+<li>修改index.html文件<ul>
+<li>内部只引入打包好的build.js</li>
+<li>具体修改内容参考下面代码范例</li>
+</ul>
+</li>
+<li>使用浏览器打开index.html<ul>
+<li>没有错误，弹出body宽高</li>
+</ul>
+</li>
+<li>代码范例<pre><code class="lang-html">&lt;html&gt;
+ &lt;body&gt;
+     &lt;script src=&quot;build.js&quot;&gt;&lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="lang-javascript">// 导入jquery模块，并用$接收jquery模块的返回值
+import $ from &#39;./jquery.js&#39;;
+var $node = $(&#39;body&#39;);
+console.log($node.width() + &#39; : &#39; + $node.width());
+</code></pre>
+</li>
+</ol>
+<h5 id="-">进阶</h5>
+<h6 id="-">使用配置文件</h6>
+<ol>
+<li>把刚才的webpack项目copy一份<ul>
+<li>删除build.js这里要重新生成</li>
+</ul>
+</li>
+<li>项目中创建webpack.config.js配置文件<ul>
+<li>配置内容参考下面的实例</li>
+</ul>
+</li>
+<li>使用命令行工具运行webpack<ul>
+<li>有了配置文件后只需运行webpack即可</li>
+</ul>
+</li>
+<li>使用浏览器打开index.html<ul>
+<li>没有错误，弹出body宽高</li>
+</ul>
+</li>
+<li>代码范例<pre><code class="lang-javascript">var path = require(&#39;path&#39;);
+module.exports = {
+ entry: &#39;./main.js&#39;,
+ output: {
+     // 这里必须为绝对路径，否则报错
+     path: path.resolve(__dirname, &#39;./&#39;),
+     filename: &#39;build.js&#39;
+ }
+};
+</code></pre>
+</li>
+</ol>
+<h6 id="-">目录规范</h6>
+<ol>
+<li>把刚才的webpack项目copy一份<ul>
+<li>删除build.js这里要重新生成</li>
+</ul>
+</li>
+<li>新增两个目录<ul>
+<li>src<ul>
+<li>用于存放我们手写的源代码</li>
+</ul>
+</li>
+<li>dist<ul>
+<li>用于存放打包后的文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>把如下代码放入src中<ul>
+<li>jquery.js</li>
+<li>main.js</li>
+</ul>
+</li>
+<li>修改webpack.config.js配置文件<ul>
+<li>修改entry路径为&#39;./src/main.js&#39;</li>
+<li>修改path路径为&#39;./dist&#39;</li>
+<li>具体修改内容参考下面代码范例</li>
+</ul>
+</li>
+<li>使用命令行工具运行webpack<ul>
+<li>有了配置文件后只需运行webpack即可</li>
+</ul>
+</li>
+<li>修改index.html<ul>
+<li>修改build.js新的引入路径</li>
+<li>具体修改内容参考下面代码范例</li>
+</ul>
+</li>
+<li>使用浏览器打开index.html<ul>
+<li>没有错误，弹出body宽高</li>
+</ul>
+</li>
+<li>代码范例<pre><code class="lang-html">&lt;html&gt;
+ &lt;body&gt;
+     &lt;script src=&quot;./dist/build.js&quot;&gt;&lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="lang-javascript">var path = require(&#39;path&#39;);
+module.exports = {
+ entry: &#39;./src/main.js&#39;,
+ output: {
+     // 这里必须为绝对路径，否则报错
+     path: path.resolve(__dirname, &#39;./&#39;),
+     filename: &#39;build.js&#39;
+ }
+};
+</code></pre>
+</li>
+</ol>
+<h2 id="plugin-">plugin使用</h2>
+<h5 id="html-webpack-plugin">html-webpack-plugin</h5>
+<ul>
+<li>可自动把构建好的js脚本引入到html中</li>
+</ul>
+<h5 id="-">准备工作</h5>
+<ul>
+<li>添加package.json配置文件</li>
+<li>可运行cnpm init -y自动创建</li>
+</ul>
+<h5 id="-">安装</h5>
+<ul>
+<li>本地webpack：cnpm i webpack -D</li>
+<li>插件：cnpm i html-webpack-plugin -D</li>
+<li>依赖：cnpm i tapable webpack-sources ansi-regex json5 object-assign emojis-list -D</li>
+</ul>
+<h5 id="-">使用</h5>
+<ul>
+<li>copy上面的项目<ul>
+<li>删除dist目录中的内容</li>
+</ul>
+</li>
+<li>修改index.html<ul>
+<li>删除build.js的引用</li>
+<li>移动文件到src目录下</li>
+</ul>
+</li>
+<li>添加配置<pre><code class="lang-javascript">plugins: [
+  new htmlWebpackPlugin({
+      template: &#39;src/index.html&#39;,
+      filename: &#39;index.html&#39;,
+      inject: &#39;body&#39;
+  })
+]
+</code></pre>
+</li>
+</ul>
+<h2 id="loader-">loader使用</h2>
+<h3 id="css-loader-style-loader">css-loader、style-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>css-loader<ul>
+<li>打包css文件内容到js中</li>
+</ul>
+</li>
+<li>style-loader<ul>
+<li>让打包好的css在页面中自动生效</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">安装</h4>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev css-loader style-loader</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">使用</h4>
+<pre><code class="lang-javascript">// main.js
+import &#39;./src/css/example.css&#39;
+</code></pre>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.css$/,
+        use: [
+            &#39;style-loader&#39;,
+            &#39;css-loader&#39;
+        ]
+    }
+]
+</code></pre>
+<h2 id="-loader">其他loader</h2>
+<h3 id="less-loader">less-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>把less解析为css</li>
+</ul>
+<h4 id="-">安装</h4>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev less-loader</li>
+</ul>
+</li>
+<li>依赖安装<ul>
+<li>npm install --save-dev less</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">使用</h4>
+<pre><code class="lang-javascript">// entry.js
+import &#39;./src/less/example.less&#39;
+</code></pre>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.less$/,
+        use: [
+            &#39;style-loader&#39;,
+            &#39;css-loader&#39;,
+            &#39;less-loader&#39;
+        ]
+    }
+]
+</code></pre>
+<h3 id="sass-loader">sass-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>把sass解析为css</li>
+</ul>
+<h4 id="-">安装</h4>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev sass-loader</li>
+</ul>
+</li>
+<li>依赖安装<ul>
+<li>npm install --save-dev node-sass</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">使用</h4>
+<pre><code class="lang-javascript">// entry.js
+import &#39;./src/scss/example.scss&#39;
+</code></pre>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.scss$/,
+        use: [
+            &#39;style-loader&#39;,
+            &#39;css-loader&#39;,
+            &#39;sass-loader&#39;
+        ]
+    }
+]
+</code></pre>
+<h3 id="html-loader">html-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>把html文件内容以字符串的形式引入</li>
+</ul>
+<h5 id="-">安装</h5>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev html-loader</li>
+</ul>
+</li>
+</ul>
+<h5 id="-">使用</h5>
+<pre><code class="lang-javascript">// entry.js
+import example from &#39;./src/tpl/example.html&#39;
+document.querySelector(&#39;body&#39;).appendChild(example);
+</code></pre>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.html$/,
+        use: &#39;html-loader&#39;
+    }
+]
+</code></pre>
+<h3 id="url-loader-image-webpack-loader">url-loader、image-webpack-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>url-loader<ul>
+<li>替换文件的引用，小文件将以base64编码的形式和文件一起打包，可减少http请求</li>
+</ul>
+</li>
+<li>image-webpack-loader<ul>
+<li>压缩图片</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">安装</h4>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev url-loader image-webpack-loader</li>
+</ul>
+</li>
+<li>依赖安装<ul>
+<li>npm install --save-dev file-loader</li>
+</ul>
+</li>
+</ul>
+<h4 id="-">使用</h4>
+<pre><code class="lang-html">// example.html
+&lt;img src=&quot;./img/example.png&quot;&gt;
+</code></pre>
+<pre><code class="lang-css">// example.css
+.cls {
+    background-image: url(&#39;../img/example.png&#39;) 
+}
+</code></pre>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+            {loader: &#39;url-loader&#39;, options: {limit: 8192}},
+            &#39;image-webpack-loader&#39;
+        ]
+    }
+]
+</code></pre>
+<h3 id="babel-loader">babel-loader</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>可把es6、es7等浏览器暂不支持的语法规范编写的js脚本，解析为浏览器支持的es5标准脚本。</li>
+</ul>
+<h5 id="-">官网</h5>
+<ul>
+<li><a href="http://babeljs.io/">英文官网</a></li>
+<li><a href="http://babeljs.cn/">中文官网</a></li>
+</ul>
+<h5 id="-">安装</h5>
+<ul>
+<li>loader安装<ul>
+<li>npm install --save-dev babel-loader</li>
+</ul>
+</li>
+<li>依赖安装<ul>
+<li>npm install --save-dev babel-core babel-preset-es2015 babel-plugin-transform-runtime</li>
+</ul>
+</li>
+</ul>
+<h5 id="-">使用</h5>
+<pre><code class="lang-javascript">rules: [
+    {
+        test: /\.js$/,
+        use: {
+            loader: &#39;babel-loader&#39;,
+            options: {
+                // 配置要解析的语法规范
+                presets: [&#39;es2015&#39;],
+                plugins: [&#39;transform-runtime&#39;]
+            }
+        },
+        include: /src/,
+        exclude: /(node_modules)|bower_components)/
+    }
+]
+</code></pre>
+<h3 id="webpack-dev-server">webpack-dev-server</h3>
+<h4 id="-">说明</h4>
+<ul>
+<li>启动一台文件服务器，可以实现代码热更新，方便开发</li>
+</ul>
+<h5 id="-">安装</h5>
+<ul>
+<li>npm install --save-dev webpack-dev-server</li>
+</ul>
+<h5 id="-">使用</h5>
+<ul>
+<li>webpack-dev-server --inline --hot --open --port 6666</li>
+</ul>
+<h5 id="-">配置</h5>
+<ul>
+<li>inline 自动刷新</li>
+<li>hot 热加载</li>
+<li>open 自动打开浏览</li>
+<li>port 指定端口，默认8080</li>
+<li>host 指定ip，默认127.0.0.1(localhost)</li>
+</ul>
+<h2 id="webpack-">webpack核心配置说明</h2>
+<h5 id="entry">entry</h5>
+<ul>
+<li>作用：入口文件</li>
+<li>值类型：<ul>
+<li>字符串值： 配置单个入口文件</li>
+<li>数组：配置多个文件，最终多个文件合并为1个入口文件</li>
+<li>对象：配置多个页面的不同入口文件，每个入口文件都会生成1个js</li>
+</ul>
+</li>
+</ul>
+<h4 id="output">output</h4>
+<ul>
+<li>作用：输出配置</li>
+<li>值类型：<ul>
+<li>对象：{}</li>
+</ul>
+</li>
+</ul>
+<h6 id="output-path">output.path</h6>
+<ul>
+<li>作用：文件输出路径，必须为绝对路径</li>
+<li>值类型：<ul>
+<li>字符串：path.resolve(__dirname, &#39;js/dist/&#39;)</li>
+</ul>
+</li>
+</ul>
+<h6 id="output-publicpath">output.publicPath</h6>
+<ul>
+<li>作用：配置文件被引用时的前缀<ul>
+<li>一般为上线后静态文件所在的服务器域名</li>
+</ul>
+</li>
+<li>值类型：<ul>
+<li>字符串: &#39;<a href="http://www.beauty.com">http://www.beauty.com</a>&#39;</li>
+</ul>
+</li>
+</ul>
+<h6 id="output-filename">output.filename</h6>
+<ul>
+<li>作用：配置输出的文件名</li>
+<li>值类型：<ul>
+<li>字符串：&#39;build.js&#39;</li>
+</ul>
+</li>
+<li>占位符使用：<ul>
+<li>可动态构成文件名</li>
+<li>name<ul>
+<li>&#39;js/[name]_build.js&#39;</li>
+<li>entry里不同入口文件的key</li>
+</ul>
+</li>
+<li>hash<ul>
+<li>&#39;js/[name]_[hash]_build.js&#39;,</li>
+<li>每次构建的hash值</li>
+</ul>
+</li>
+<li>chunkhash<ul>
+<li>&#39;js/[name]_[chunkhash]_build.js&#39;,</li>
+<li>构建后文件的hash值</li>
+<li>使用频率较高</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="plugins">plugins</h4>
+<ul>
+<li>作用：插件配置</li>
+<li>值类型：<ul>
+<li>数组：[plugin_config_1, plugin_config_2, ...]</li>
+</ul>
+</li>
+</ul>
+<h4 id="module">module</h4>
+<ul>
+<li>作用：对不同文件类型模块的配置</li>
+<li>值类型：<ul>
+<li>对象：{}</li>
+</ul>
+</li>
+</ul>
+<h6 id="module-rules">module.rules</h6>
+<ul>
+<li>作用：不同模块处理规则</li>
+<li>值类型：<ul>
+<li>数组：[loader_config_1, loader_config_2, ...]</li>
+</ul>
+</li>
+</ul>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
